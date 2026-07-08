@@ -1,9 +1,9 @@
 # React application
 
-Creted Home.tsx, added Button and Typography components. Added dotenv. Added prettier, GitHub Actions (ci.yml)
+Added Dockerfile and Docker Compose, .dockerignore. 
 
-In order to run an application: 
+In order to run an application as a container: 
 ```bash
-npm start
+docker compose up --build 
 ```
 and navigate to http://localhost:3000.
