@@ -1,4 +1,5 @@
-import { AppBar, Toolbar, Typography } from "@mui/material"
+import { AppBar, Toolbar, Typography, Box } from "@mui/material"
+import LanguageSelect from "../LanguageSelect/LanguageSelect";
 
 const Header = () => {
   return (
@@ -7,6 +8,9 @@ const Header = () => {
         <Typography variant="h6">
           Meduzzen Internship
         </Typography>
+        <Box sx={{ ml: "auto" }}>
+            <LanguageSelect/>
+        </Box>
       </Toolbar>
     </AppBar>
   )

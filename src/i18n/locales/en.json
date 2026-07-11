@@ -1,0 +1,37 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "users": "Users",
+    "companies": "Companies"
+  },
+  "home": {
+    "title": "My React Application",
+    "begin": "Get Started"
+  },
+  "about": {
+    "title": "About",
+    "description": "This application demonstrates React Router, Material UI and mocked data.",
+    "modal": "Open Modal",
+    "text": "This project was created as a part of internship."
+  },
+  "users": {
+    "title": "Users"
+  },
+  "companies": {
+    "title": "Companies"
+  },
+  "notfound": {
+    "page": "Page not found.",
+    "user": "User not found."
+  },
+  "userprofile": {
+    "name": "Name",
+    "email": "Email",
+    "company": "Company",
+    "address": "Address"
+  },
+  "modal": {
+    "close": "Close"
+  }
+}
