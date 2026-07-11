@@ -1,6 +1,6 @@
-# FE #3: Add Common Pages
+# FE #4: Implement Transition
 
-Added following pages: About, Companies, Company Profile, User Profile, Users. Added routing, modal window. 
+Implemented English and Ukrainian via i18n and JSON, added possibility to switch the languages, set English as default. 
 
 In order to run an application as a container: 
 ```bash
