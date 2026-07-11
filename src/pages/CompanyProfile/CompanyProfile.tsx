@@ -1,9 +1,11 @@
 import { Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { companies } from "../../mocks/companies";
+import { useTranslation } from "react-i18next";
 
 const UserProfile = () => {
   const { id } = useParams();
+  const { t } = useTranslation();
 
   const company = companies.find(
     (company) => company.id === Number(id)
@@ -13,7 +15,7 @@ const UserProfile = () => {
     return (
       <Container sx={{ mt: 4 }}>
         <Typography variant="h4">
-          User not found
+          {t("notfound.user")}
         </Typography>
       </Container>
     );
@@ -22,15 +24,15 @@ const UserProfile = () => {
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h3">
-        {company.name}
+        {t("userprofile.name")}: {company.name}
       </Typography>
 
       <Typography>
-        Name: {company.name}
+        {t("userprofile.email")}: {company.email}
       </Typography>
 
       <Typography>
-        Address: {company.address}
+        {t("userprofile.address")}: {company.address}
       </Typography>
     </Container>
   );

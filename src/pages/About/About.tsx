@@ -1,23 +1,24 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
-
+import { useTranslation } from "react-i18next";
 import AppModal from "../../components/Common/AppModal/AppModal";
 
 const About = () => {
   const [open, setOpen] = useState<boolean | undefined>();
+  const { t } = useTranslation();
 
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h3">
-        About
+        {t("about.title")}
       </Typography>
 
       <Typography variant="body1">
-        This application demonstrates React Router, Material UI and mocked data
+        {t("about.description")}
       </Typography>
 
       <Button variant="contained" onClick={() => setOpen(true)}>
-        Open Modal
+        {t("about.modal")}
       </Button>
 
       <AppModal
@@ -26,7 +27,7 @@ const About = () => {
         onClose={() => setOpen(false)}
       >
         <Typography>
-          This project was created as a part of internship.
+          {t("about.text")}
         </Typography>
       </AppModal>
     </Container>
