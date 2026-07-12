@@ -2,6 +2,7 @@ import { Button, Container, Typography } from '@mui/material';
 import { REACT_APP_APP_NAME } from '../../App';
 import { useTranslation } from 'react-i18next';
 
+
 function onButtonPress() {
   window.alert('Welcome to my application!');
 }

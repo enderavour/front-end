@@ -1,6 +1,6 @@
-# FE #4: Implement Transition
+# FE #5: Add state manager 
 
-Implemented English and Ukrainian via i18n and JSON, added possibility to switch the languages, set English as default. 
+Integrated Redux Toolkit, created slice and store to modify text on button click using useDispatch and useSelector. 
 
 In order to run an application as a container: 
 ```bash
