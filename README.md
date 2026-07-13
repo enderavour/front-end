@@ -1,6 +1,6 @@
-# FE #5: Add state manager 
+# FE #6: Add Axios
 
-Integrated Redux Toolkit, created slice and store to modify text on button click using useDispatch and useSelector. 
+Created a centralized Axios intance with timeout, headers and base URL. Implemented check for /health checkpoint, added it to Home.tsx via useEffect. Configured axios interceptors for request and response. 
 
 In order to run an application as a container: 
 ```bash
