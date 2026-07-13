@@ -8,6 +8,7 @@ on:
       - FE-3-add-common-pages
       - FE-4-implement-transition
       - FE-5-add-state-manager
+      - FE-6-add-axios
       - main
   pull_request:
     branches:
@@ -16,6 +17,7 @@ on:
       - FE-3-add-common-pages
       - FE-4-implement-transition
       - FE-5-add-state-manager
+      - Fe-6-add-axios
       - main
 env:
   CI: false
