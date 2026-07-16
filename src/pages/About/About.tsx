@@ -1,10 +1,10 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 
-import { AppModal } from "../../components/ui/AppModal";
+import AppModal from "../../components/Common/AppModal/AppModal";
 
 const About = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean | undefined>();
 
   return (
     <Container sx={{ mt: 4 }}>
@@ -21,7 +21,7 @@ const About = () => {
       </Button>
 
       <AppModal
-        open={open}
+        open={open as boolean}
         title="About Project"
         onClose={() => setOpen(false)}
       >
@@ -33,4 +33,4 @@ const About = () => {
   )
 };
 
-export { About };
+export default About;

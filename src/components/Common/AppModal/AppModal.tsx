@@ -36,4 +36,4 @@ const AppModal = ({
   )
 };
 
-export { AppModal };
+export default AppModal;

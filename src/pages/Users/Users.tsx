@@ -1,17 +1,13 @@
 import { Container, Typography } from "@mui/material";
 
-const NotFound = () => {
+const Users = () => {
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h3">
-        404
-      </Typography>
-
-      <Typography>
-        Page not found.
+        Users
       </Typography>
     </Container>
   )
 };
 
-export { NotFound };
+export default Users;
