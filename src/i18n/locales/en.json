@@ -33,5 +33,13 @@
   },
   "modal": {
     "close": "Close"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "no_account": "Don't have an account?"
+  },
+  "reg": {
+    "registration": "Registration"
   }
 }

@@ -1,17 +1,17 @@
 import { Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { companies } from "../../mocks/companies";
+import { users } from "../../mocks/users";
 import { useTranslation } from "react-i18next";
 
 const UserProfile = () => {
   const { id } = useParams();
   const { t } = useTranslation();
 
-  const company = companies.find(
-    (company) => company.id === Number(id)
+  const user = users.find(
+    (user) => user.id === Number(id)
   );
 
-  if (!company) {
+  if (!user) {
     return (
       <Container sx={{ mt: 4 }}>
         <Typography variant="h4">
@@ -24,18 +24,18 @@ const UserProfile = () => {
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h3">
-        {t("userprofile.name")}: {company.name}
+        {user.name}
       </Typography>
 
       <Typography>
-        {t("userprofile.email")}: {company.email}
+        {t("userprofile.email")}: {user.email}
       </Typography>
 
       <Typography>
-        {t("userprofile.address")}: {company.address}
+        {t("userprofile.company")}: {user.company}
       </Typography>
     </Container>
   );
 };
 
-export default UserProfile;
+export { UserProfile };

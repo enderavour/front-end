@@ -1,6 +1,6 @@
-# FE #6: Add Axios
+# FE #7: Automatization and Token Management
 
-Created a centralized Axios intance with timeout, headers and base URL. Implemented check for /health checkpoint, added it to Home.tsx via useEffect. Configured axios interceptors for request and response. 
+Developed Login and Registration pages, set up PrivateRoute, implemented slice in Redux store for storing tokens, developed Login and Registration pages. 
 
 In order to run an application as a container: 
 ```bash

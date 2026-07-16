@@ -23,4 +23,4 @@ const ReduxDemo = () => {
     );
 }
 
-export default ReduxDemo;
+export { ReduxDemo };

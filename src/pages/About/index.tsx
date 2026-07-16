@@ -1,11 +1,11 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import AppModal from "../../components/Common/AppModal/AppModal";
-import ReduxDemo from "../../components/ReduxDemo/ReduxDemo";
+import { AppModal } from "../../components/ui/AppModal";
+import { ReduxDemo } from "../../components/ReduxDemo/ReduxDemo";
 
 const About = () => {
-  const [open, setOpen] = useState<boolean | undefined>();
+  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
   return (
@@ -23,7 +23,7 @@ const About = () => {
       </Button>
 
       <AppModal
-        open={open as boolean}
+        open={open}
         title="About Project"
         onClose={() => setOpen(false)}
       >
@@ -36,4 +36,4 @@ const About = () => {
   )
 };
 
-export default About;
+export { About };
