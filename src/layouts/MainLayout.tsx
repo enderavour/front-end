@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 
-import Header from "../components/Common/Header/Header";
-import Navigation from "../components/Common/Navigation/Navigation";
-import Footer from "../components/Common/Footer/Footer"
+import { Header } from "../components/layout/Header";
+import { Navigation } from "../components/layout/Navigation";
+import { Footer } from "../components/layout/Footer";
 
 const MainLayout = () => {
   return (
@@ -18,4 +18,4 @@ const MainLayout = () => {
   )
 };
 
-export default MainLayout;
+export { MainLayout };

@@ -4,14 +4,7 @@ on:
   push:
     branches:
       - develop
-      - FE-2-add-dockerfile
-      - FE-3-add-common-pages
-      - main
-  pull_request:
-    branches:
-      - develop
-      - FE-2-add-dockerfile
-      - FE-3-add-common-pages
+      - "**"
       - main
 env:
   CI: false

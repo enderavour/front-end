@@ -2,7 +2,7 @@ import { Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { companies } from "../../mocks/companies";
 
-const UserProfile = () => {
+const CompanyProfile = () => {
   const { id } = useParams();
 
   const company = companies.find(
@@ -36,4 +36,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export { CompanyProfile };
