@@ -3,21 +3,24 @@ import { loadAuth } from "../utils/authStorage";
 
 interface AuthState
 {
-  token: string | null,
-  expiresAt: number | null
+  token: string | null;
+  expiresAt: number | null;
+  userId: number | null;
 };
 
 interface LoginPayload
 {
   token: string,
-  expiresAt: number
+  expiresAt: number,
+  userId: number | null
 };
 
 const auth = loadAuth();
 
 const initialState: AuthState = auth ?? {
   token: null,
-  expiresAt: null
+  expiresAt: null,
+  userId: null
 };
 
 const authSlice = createSlice({
@@ -28,6 +31,7 @@ const authSlice = createSlice({
     login(state, action: PayloadAction<LoginPayload>) {
       state.token = action.payload.token;
       state.expiresAt = action.payload.expiresAt;
+      state.userId = action.payload.userId;
     },
     logout(state) {
       state.token = null;

@@ -8,6 +8,7 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 import { SocialAuth } from "../../components/auth/SocialAuth";
 import { useTranslation } from "react-i18next";
+import axiosInstance from "../../api/apiService";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -15,15 +16,29 @@ const Registration = () => {
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
 
   const [emailError, setEmailError] = useState(false);
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
       setEmailError(true);
       return;
+    }
+
+    try
+    {
+      await axiosInstance.post("/users/", {
+        email,
+        username: name,
+        password
+      });
+    }
+    catch (e)
+    {
+      console.log(e)
     }
 
     navigate("/login");
@@ -54,6 +69,15 @@ const Registration = () => {
         }}
         error={emailError}
         helperText={emailError ? "Enter a valid email" : ""}
+      />
+
+      <TextField
+        fullWidth
+        label="Password"
+        type="password"
+        margin="normal"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
 
       <Button

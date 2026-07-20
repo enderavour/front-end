@@ -1,6 +1,6 @@
-# FE #7: Automatization and Token Management
+# FE #8: Add User CRUD
 
-Developed Login and Registration pages, set up PrivateRoute, implemented slice in Redux store for storing tokens, developed Login and Registration pages. 
+Implemented Redux state management for users, implemented fetching by ID with Axios, implemented ability to delete and modify profiles, extended User models, added pagination for users.
 
 In order to run an application as a container: 
 ```bash

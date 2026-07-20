@@ -6,6 +6,7 @@ import { Button, TextField, Typography, Container } from "@mui/material";
 import { SocialAuth } from "../../components/auth/SocialAuth";
 import { saveAuth } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
+import axiosInstance from "../../api/apiService";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -16,10 +17,11 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [password, setPassword] = useState("");
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
@@ -27,19 +29,37 @@ const Login = () => {
       return;
     }
 
-    const authData = {
-      token: "fake-token",
-      expiresAt: Date.now() + 60 * 60 * 1000
-    };
+    try
+    {
+      const response = await axiosInstance.post("/auth/signin", {
+        email, password
+      });
 
-    dispatch(login(authData));
+      const {
+        access_token,
+        user_id
+      } = response.data;
 
-    saveAuth(
-      authData.token,
-      authData.expiresAt
-    );
+      const authData = {
+        token: access_token,
+        expiresAt: Date.now() + 60 * 60 * 1000,
+        userId: user_id
+      };
 
-    navigate(from, { replace: true });
+      dispatch(login(authData));
+
+      saveAuth(
+        authData.token,
+        authData.expiresAt,
+        authData.userId
+      );
+
+      navigate(from, { replace: true });
+    }
+    catch (e)
+    {
+      console.log(`Error: ${e}`);
+    }
   };
 
   return (
@@ -63,6 +83,15 @@ const Login = () => {
             ? "Enter a valid email"
             : ""
         }
+      />
+
+      <TextField
+        fullWidth
+        label="Password"
+        type="password"
+        margin="normal"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
 
       <Button

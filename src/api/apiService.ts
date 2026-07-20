@@ -1,16 +1,20 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: "http://localhost:8000",
   timeout: 20000,
   headers: {
     "Content-Type": "application/json",
-    "Accept": "application/json"
+    "Accept": "application/json",
   }
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  console.log(`Request: ${config.url}`);
+  const token = localStorage.getItem("token");
+
+  if (token)
+    config.headers.Authorization = `Bearer ${token}`;
+
   return config;
 });
 

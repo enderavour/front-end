@@ -16,6 +16,7 @@
     "text": "This project was created as a part of internship."
   },
   "users": {
+    "loading": "Loading...",
     "title": "Users"
   },
   "companies": {
@@ -29,7 +30,8 @@
     "name": "Name",
     "email": "Email",
     "company": "Company",
-    "address": "Address"
+    "address": "Address",
+    "save": "Save"
   },
   "modal": {
     "close": "Close"
@@ -41,5 +43,12 @@
   },
   "reg": {
     "registration": "Registration"
+  },
+  "delete": {
+    "del_title": "Delete User",
+    "del_question": "Are you sure you want to delete your profile?",
+    "del": "Delete",
+    "can": "Cancel",
+    "del_prof": "Delete profile"
   }
 }
