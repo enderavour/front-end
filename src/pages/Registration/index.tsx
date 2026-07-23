@@ -9,6 +9,9 @@ import { useNavigate, Link } from "react-router-dom";
 import { SocialAuth } from "../../components/auth/SocialAuth";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/apiService";
+import { Header } from "../../layouts/Header";
+import { Alert } from "@mui/material";
+import axios from "axios";
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -18,9 +21,13 @@ const Registration = () => {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState("");
+
   const [emailError, setEmailError] = useState(false);
 
   const handleRegister = async () => {
+    setError("");
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
@@ -35,69 +42,81 @@ const Registration = () => {
         username: name,
         password
       });
+
+      navigate("/login");
     }
     catch (e)
     {
-      console.log(e)
+      if (axios.isAxiosError(e))
+        setError(e.response?.data?.detail ?? "Registration failed");
+      else
+        setError("Unknown error");
     }
-
-    navigate("/login");
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        {t("reg.registration")}
-      </Typography>
+    <>
+      <Header/>
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          {t("reg.registration")}
+        </Typography>
 
-      <TextField
-        fullWidth
-        label="Name"
-        margin="normal"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
-      <TextField
-        fullWidth
-        label="Email"
-        margin="normal"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setEmailError(false);
-        }}
-        error={emailError}
-        helperText={emailError ? "Enter a valid email" : ""}
-      />
+        <TextField
+          fullWidth
+          label={t("registration.name")}
+          margin="normal"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-      <TextField
-        fullWidth
-        label="Password"
-        type="password"
-        margin="normal"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <TextField
+          fullWidth
+          label={t("registration.email")}
+          margin="normal"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setEmailError(false);
+          }}
+          error={emailError}
+          helperText={emailError ? "Enter a valid email" : ""}
+        />
 
-      <Button
-        fullWidth
-        variant="contained"
-        sx={{ mt: 2 }}
-        onClick={handleRegister}
-      >
-        {t("reg.registration")}
-      </Button>
+        <TextField
+          fullWidth
+          label={t("registration.password")}
+          type="password"
+          margin="normal"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <Typography sx={{ mt: 2 }}>
-        Already have an account?{" "}
-        <Link to="/login">
-          {t("auth.login")}
-        </Link>
-      </Typography>
+        <Button
+          fullWidth
+          variant="contained"
+          sx={{ mt: 2 }}
+          onClick={handleRegister}
+        >
+          {t("reg.registration")}
+        </Button>
 
-      <SocialAuth />
-    </Container>
+        <Typography sx={{ mt: 2 }}>
+          {t("reg.have_account")}{" "}
+          <Link to="/login">
+            {t("auth.login")}
+          </Link>
+        </Typography>
+
+        <SocialAuth />
+      </Container>
+    </>
   );
 };
 

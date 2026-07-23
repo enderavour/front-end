@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/hooks";
 import { logout } from "../../store/authSlice";
 import { clearAuth } from "../../utils/authStorage";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -25,7 +27,7 @@ const Header = () => {
             <LanguageSelect/>
         </Box>
         <Button variant="contained" onClick={handleLogout}>
-          Logout
+          {t("logout")}
         </Button>
       </Toolbar>
     </AppBar>

@@ -15,11 +15,14 @@ export const loadAuth = () => {
   return {
     token,
     expiresAt: Number(expiresAt),
-    userId: Number(userId)
+    userId: Number(userId),
+    loading: false,
+    error: null
   };
 };
 
 export const clearAuth = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expiresAt");
+  localStorage.removeItem("userId");
 }

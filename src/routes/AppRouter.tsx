@@ -11,12 +11,14 @@ import { AddRoutes } from "./routes";
 import { PrivateRoute } from "./PrivateRoute";
 import { Login } from "../pages/Login";
 import { Registration } from "../pages/Registration";
+import { AuthCallback } from "../components/auth/AuthCallback";
 
 const AppRouter = () => {
     return (
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Registration />} />
+        <Route path={AddRoutes.AUTH_CALLBACK} element={<AuthCallback />} />
 
         <Route element={<PrivateRoute />}>
           <Route path={AddRoutes.ROOT} element={<MainLayout />}>

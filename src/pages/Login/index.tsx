@@ -2,11 +2,13 @@ import { useState } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { login } from "../../store/authSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button, TextField, Typography, Container } from "@mui/material";
+import { Button, TextField, Typography, Container, Alert } from "@mui/material";
 import { SocialAuth } from "../../components/auth/SocialAuth";
 import { saveAuth } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/apiService";
+import { Header } from "../../layouts/Header";
+import axios from "axios";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -19,9 +21,13 @@ const Login = () => {
   const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState("");
 
+  const [error, setError] = useState("");
+
   const from = location.state?.from?.pathname || "/";
 
   const handleLogin = async () => {
+    setError("");
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
@@ -58,60 +64,76 @@ const Login = () => {
     }
     catch (e)
     {
-      console.log(`Error: ${e}`);
+      if (axios.isAxiosError(e))
+        setError(e.response?.data?.detail ?? "Login Failed");
+      else
+        setError("Unknown error");
     }
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        {t("auth.login")}
-      </Typography>
+    <>
+      <Header/>
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          {t("auth.login")}
+        </Typography>
 
-      <TextField
-        fullWidth
-        label="Email"
-        margin="normal"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setEmailError(false);
-        }}
-        error={emailError}
-        helperText={
-          emailError
-            ? "Enter a valid email"
-            : ""
-        }
-      />
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
-      <TextField
-        fullWidth
-        label="Password"
-        type="password"
-        margin="normal"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <TextField
+          fullWidth
+          label={t("login.email")}
+          margin="normal"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setEmailError(false);
+            setError("");
+          }}
+          error={emailError}
+          helperText={
+            emailError
+              ? "Enter a valid email"
+              : ""
+          }
+        />
 
-      <Button
-        fullWidth
-        variant="contained"
-        onClick={handleLogin}
-        sx={{ mt: 2 }}
-      >
-        {t("auth.login")}
-      </Button>
+        <TextField
+          fullWidth
+          label={t("login.password")}
+          type="password"
+          margin="normal"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setError("");
+          }}
+        />
 
-      <Typography sx={{ mt: 2 }}>
-        {t("auth.no_account")}{" "}
-        <Link to="/register">
-          {t("auth.register")}
-        </Link>
-      </Typography>
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={handleLogin}
+          sx={{ mt: 2 }}
+        >
+          {t("auth.login")}
+        </Button>
 
-      <SocialAuth />
-    </Container>
+        <Typography sx={{ mt: 2 }}>
+          {t("auth.no_account")}{" "}
+          <Link to="/register">
+            {t("auth.register")}
+          </Link>
+        </Typography>
+
+        <SocialAuth />
+      </Container>
+    </>
   );
 };
 

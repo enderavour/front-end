@@ -42,7 +42,23 @@
     "no_account": "Не маєте акаунту?"
   },
   "reg": {
-    "registration": "Реєстрація"
+    "registration": "Реєстрація",
+    "have_account": "Вже маєте акаунт?"
+  },
+  "logout": "Вийти",
+  "login": {
+    "email": "Е-пошта",
+    "password": "Пароль"
+  },
+  "registration": {
+    "name": "Ім'я",
+    "email": "Е-пошта",
+    "password": "Пароль"
+  },
+  "userProfile": {
+    "edit": "Редагувати профіль",
+    "view": "Переглянути профіль",
+    "delete": "Видалити профіль"
   },
   "delete": {
     "del_title": "Видалити користувача",

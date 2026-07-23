@@ -15,7 +15,7 @@ const Home = () => {
     healthCheck()
       .then((res) => console.log(res.data))
       .catch((err) => console.error(err))
-  });
+  }, []);
 
   return (
     <Container maxWidth="md">

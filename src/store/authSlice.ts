@@ -6,6 +6,9 @@ interface AuthState
   token: string | null;
   expiresAt: number | null;
   userId: number | null;
+
+  loading: boolean;
+  error: string | null;
 };
 
 interface LoginPayload
@@ -20,7 +23,9 @@ const auth = loadAuth();
 const initialState: AuthState = auth ?? {
   token: null,
   expiresAt: null,
-  userId: null
+  userId: null,
+  loading: false,
+  error: null
 };
 
 const authSlice = createSlice({

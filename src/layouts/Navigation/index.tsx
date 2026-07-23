@@ -1,14 +1,17 @@
 import { Box, Button } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const navigationItems = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
-  { label: "Users", path: "/users" },
-  { label: "Companies", path: "/companies" }
+  { label: "navigation.home", path: "/" },
+  { label: "navigation.about", path: "/about" },
+  { label: "navigation.users", path: "/users" },
+  { label: "navigation.companies", path: "/companies" }
 ];
 
 const Navigation = () => {
+  const { t } = useTranslation();
+
   return (
       <Box
         sx={{
@@ -24,7 +27,7 @@ const Navigation = () => {
           component={NavLink}
           to={item.path}
         >
-          {item.label}
+          {t(item.label)}
         </Button>
       ))}
       </Box>

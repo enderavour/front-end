@@ -2,9 +2,16 @@ import { User } from "../types/User"
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../api/apiService";
 
+interface UserResponse
+{
+  users: User[];
+  total: number;
+}
+
 interface UsersState
 {
   users: User[];
+  total: number;
   selectedUser: User | null;
   loading: boolean;
   error: string | null;
@@ -12,17 +19,18 @@ interface UsersState
 
 const initialState: UsersState = {
   users: [],
+  total: 0,
   selectedUser: null,
   loading: false,
   error: null
 };
 
-export const fetchUsers = createAsyncThunk<User[], {
+export const fetchUsers = createAsyncThunk<UserResponse, {
   skip: number; limit: number;
 }>(
   "users/fetchUsers",
   async ({skip, limit}) => {
-    const response = await axiosInstance.get<User[]>(
+    const response = await axiosInstance.get<UserResponse>(
      `/users?skip=${skip}&limit=${limit}`
     );
 
@@ -77,7 +85,8 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.users = action.payload;
+        state.total = action.payload.total;
+        state.users = action.payload.users;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
@@ -101,7 +110,7 @@ const usersSlice = createSlice({
         state.loading = false;
 
         state.users = state.users.filter(user => user.id !== action.payload);
-
+        state.total -= 1;
         state.selectedUser = null;
       })
       .addCase(deleteUser.rejected, (state, action) => {

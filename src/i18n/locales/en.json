@@ -42,7 +42,23 @@
     "no_account": "Don't have an account?"
   },
   "reg": {
-    "registration": "Registration"
+    "registration": "Registration",
+    "have_account": "Already have an account?"
+  },
+  "logout": "Logout",
+  "login": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "registration": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password"
+  },
+  "userProfile": {
+    "edit": "Edit profile",
+    "view": "View profile",
+    "delete": "Delete profile"
   },
   "delete": {
     "del_title": "Delete User",
