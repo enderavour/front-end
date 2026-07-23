@@ -10,7 +10,7 @@ interface Props
 const PagePagination = ({
   page,
   totalPages,
-  onChange
+  onChange,
 }: Props) => {
   return (
     <Pagination
