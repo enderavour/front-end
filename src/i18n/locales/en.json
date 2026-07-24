@@ -41,7 +41,7 @@
   "auth": {
     "login": "Login",
     "register": "Register",
-    "no_account": "Don't have an account?"
+    "no_account": "Don't have an account?",
     "already_account": "Already have an account?"
   },
   "reg": {
