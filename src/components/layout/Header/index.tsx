@@ -1,6 +1,6 @@
 import { AppBar, Toolbar, Typography } from "@mui/material"
 
-const Header = () => {
+export const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
@@ -11,5 +11,3 @@ const Header = () => {
     </AppBar>
   )
 };
-
-export { Header };

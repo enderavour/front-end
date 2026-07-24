@@ -1,19 +1,9 @@
 import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material"
 import { LanguageSelect } from "../../components/ui/LanguageSelect";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/hooks";
-import { logout } from "../../store/authSlice";
-import { clearAuth } from "../../utils/authStorage";
+import { useLogout } from "../../hooks/logout";
 
-const Header = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    dispatch(logout());
-    clearAuth();
-    navigate("/login");
-  };
+export const Header = () => {
+  const logout = useLogout();
 
   return (
     <AppBar position="static">
@@ -24,12 +14,10 @@ const Header = () => {
         <Box sx={{ ml: "auto" }}>
             <LanguageSelect/>
         </Box>
-        <Button variant="contained" onClick={handleLogout}>
+        <Button variant="contained" onClick={logout}>
           Logout
         </Button>
       </Toolbar>
     </AppBar>
   )
 };
-
-export { Header };

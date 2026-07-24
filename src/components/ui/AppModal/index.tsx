@@ -16,7 +16,7 @@ interface AppModalProps
 };
 
 
-const AppModal = ({
+export const AppModal = ({
   open, title, onClose, children
 }: AppModalProps) => {
   return (
@@ -35,5 +35,3 @@ const AppModal = ({
     </Dialog>
   )
 };
-
-export { AppModal };

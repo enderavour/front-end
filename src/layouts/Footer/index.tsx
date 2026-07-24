@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <Box
       sx={{
@@ -14,5 +14,3 @@ const Footer = () => {
     </Box>
   )
 };
-
-export { Footer };

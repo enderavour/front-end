@@ -2,9 +2,8 @@ import { Button, Container, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AppModal } from "../../components/ui/AppModal";
-import { ReduxDemo } from "../../components/ReduxDemo/ReduxDemo";
 
-const About = () => {
+export const About = () => {
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
 
@@ -31,9 +30,6 @@ const About = () => {
           {t("about.text")}
         </Typography>
       </AppModal>
-      <ReduxDemo/>
     </Container>
   )
 };
-
-export { About };

@@ -4,10 +4,12 @@ import { login } from "../../store/authSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, TextField, Typography, Container } from "@mui/material";
 import { SocialAuth } from "../../components/auth/SocialAuth";
-import { saveAuth } from "../../utils/authStorage";
+import { setToStorage } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
+import { emailRegex } from "../../utils/regex";
+import { AddRoutes } from "../../routes/routes";
 
-const Login = () => {
+export const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,7 +22,6 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
 
   const handleLogin = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
       setEmailError(true);
@@ -34,7 +35,7 @@ const Login = () => {
 
     dispatch(login(authData));
 
-    saveAuth(
+    setToStorage(
       authData.token,
       authData.expiresAt
     );
@@ -69,14 +70,14 @@ const Login = () => {
         fullWidth
         variant="contained"
         onClick={handleLogin}
-        sx={{ mt: 2 }}
+        sx={{ pt: 2 }}
       >
         {t("auth.login")}
       </Button>
 
-      <Typography sx={{ mt: 2 }}>
+      <Typography sx={{ pt: 2 }}>
         {t("auth.no_account")}{" "}
-        <Link to="/register">
+        <Link to={AddRoutes.REGISTER}>
           {t("auth.register")}
         </Link>
       </Typography>
@@ -85,5 +86,3 @@ const Login = () => {
     </Container>
   );
 };
-
-export { Login };

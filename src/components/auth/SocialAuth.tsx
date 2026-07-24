@@ -1,7 +1,7 @@
 import { Stack } from "@mui/material"
 import { Google, GitHub, Facebook } from "@mui/icons-material"
 
-const SocialAuth = () => {
+export const SocialAuth = () => {
   return (
     <Stack
       direction="row"
@@ -14,5 +14,3 @@ const SocialAuth = () => {
     </Stack>
   );
 };
-
-export { SocialAuth };

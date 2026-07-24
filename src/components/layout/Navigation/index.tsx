@@ -8,7 +8,7 @@ const navigationItems = [
   { label: "Companies", path: "/companies" }
 ];
 
-const Navigation = () => {
+export const Navigation = () => {
   return (
       <Box
         sx={{
@@ -30,5 +30,3 @@ const Navigation = () => {
       </Box>
   )
 }
-
-export { Navigation };

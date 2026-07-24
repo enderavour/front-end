@@ -12,20 +12,20 @@ import { PrivateRoute } from "./PrivateRoute";
 import { Login } from "../pages/Login";
 import { Registration } from "../pages/Registration";
 
-const AppRouter = () => {
+export const AppRouter = () => {
     return (
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Registration />} />
+        <Route path={AddRoutes.LOGIN} element={<Login />} />
+        <Route path={AddRoutes.REGISTER} element={<Registration />} />
 
         <Route element={<PrivateRoute />}>
           <Route path={AddRoutes.ROOT} element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path={AddRoutes.ABOUT} element={<About />} />
             <Route path={AddRoutes.USERS} element={<Users />} />
-            <Route path={AddRoutes.USERS_ID} element={<UserProfile />} />
+            <Route path="users/:id" element={<UserProfile />} />
             <Route path={AddRoutes.COMPANIES} element={<Companies />} />
-            <Route path={AddRoutes.COMPANIES_ID} element={<CompanyProfile />} />
+            <Route path="companies/:id" element={<CompanyProfile />} />
           </Route>
         </Route>
 
@@ -33,5 +33,3 @@ const AppRouter = () => {
       </Routes>
     );
 };
-
-export { AppRouter };

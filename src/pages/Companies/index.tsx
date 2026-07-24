@@ -1,8 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-
-const Companies = () => {
+export const Companies = () => {
   const { t } = useTranslation();
 
   return (
@@ -13,5 +12,3 @@ const Companies = () => {
     </Container>
   )
 };
-
-export { Companies };

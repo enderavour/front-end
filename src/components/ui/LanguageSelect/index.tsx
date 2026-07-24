@@ -1,7 +1,7 @@
 import { Select, MenuItem } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-const LanguageSelect = () => {
+export const LanguageSelect = () => {
   const { i18n } = useTranslation();
 
   const handleChange = (event: any) => {
@@ -22,5 +22,3 @@ const LanguageSelect = () => {
     </Select>
   )
 }
-
-export { LanguageSelect };

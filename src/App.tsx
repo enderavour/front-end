@@ -3,10 +3,9 @@ import { AppRouter } from "./routes/AppRouter";
 import { useAppDispatch } from './hooks/hooks';
 import { useTokenExpiration } from './hooks/useTokenExpiration';
 
-const REACT_APP_APP_NAME = process.env.REACT_APP_APP_NAME;
-export { REACT_APP_APP_NAME };
 
-function App() {
+function App()
+{
   const dispatch = useAppDispatch();
   useTokenExpiration();
 

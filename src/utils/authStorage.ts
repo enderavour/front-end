@@ -1,10 +1,10 @@
-export const saveAuth = (token: string, expiresAt: number) => {
+export const setToStorage = (token: string, expiresAt: number) => {
   localStorage.setItem("token", token);
   localStorage.setItem("expiresAt", String(expiresAt));
 };
 
 
-export const loadAuth = () => {
+export const getFromStorage = () => {
   const token = localStorage.getItem("token");
   const expiresAt = localStorage.getItem("expiresAt");
 
@@ -16,7 +16,7 @@ export const loadAuth = () => {
   };
 };
 
-export const clearAuth = () => {
+export const clearStorage = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expiresAt");
 }

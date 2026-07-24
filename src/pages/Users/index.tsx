@@ -1,7 +1,7 @@
 import { Container, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-const Users = () => {
+export const Users = () => {
   const { t } = useTranslation();
 
   return (
@@ -12,5 +12,3 @@ const Users = () => {
     </Container>
   )
 };
-
-export { Users };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import {
   Button,
   Container,
@@ -8,8 +8,9 @@ import {
 import { useNavigate, Link } from "react-router-dom";
 import { SocialAuth } from "../../components/auth/SocialAuth";
 import { useTranslation } from "react-i18next";
+import { emailRegex } from "../../utils/regex";
 
-const Registration = () => {
+export const Registration = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -18,8 +19,14 @@ const Registration = () => {
 
   const [emailError, setEmailError] = useState(false);
 
+  const handleEmailInput = (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setEmail(event.target?.value);
+    setEmailError(false);
+  };
+
   const handleRegister = () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailRegex.test(email)) {
       setEmailError(true);
@@ -48,12 +55,9 @@ const Registration = () => {
         label="Email"
         margin="normal"
         value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setEmailError(false);
-        }}
+        onChange={(e) => handleEmailInput(e)}
         error={emailError}
-        helperText={emailError ? "Enter a valid email" : ""}
+        helperText={emailError ? t("errors.invalidEmail") : ""}
       />
 
       <Button
@@ -66,7 +70,7 @@ const Registration = () => {
       </Button>
 
       <Typography sx={{ mt: 2 }}>
-        Already have an account?{" "}
+        {t("auth.already_account")}{" "}
         <Link to="/login">
           {t("auth.login")}
         </Link>
@@ -76,5 +80,3 @@ const Registration = () => {
     </Container>
   );
 };
-
-export { Registration };

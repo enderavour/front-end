@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { users } from "../../mocks/users";
 import { useTranslation } from "react-i18next";
 
-const UserProfile = () => {
+export const UserProfile = () => {
   const { id } = useParams();
   const { t } = useTranslation();
 
@@ -37,5 +37,3 @@ const UserProfile = () => {
     </Container>
   );
 };
-
-export { UserProfile };
