@@ -1,4 +1,4 @@
-# FE #7: Automatization and Token Management
+# FE #7: Authorization and Token Management
 
 Developed Login and Registration pages, set up PrivateRoute, implemented slice in Redux store for storing tokens, developed Login and Registration pages. 
 
