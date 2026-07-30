@@ -1,6 +1,6 @@
-# FE #8: Add User CRUD
+# FE #9: Add Company CRUD
 
-Implemented Redux state management for users, implemented fetching by ID with Axios, implemented ability to delete and modify profiles, extended User models, added pagination for users.
+Created Company feature, added Edit and Delete options, added option to leave company, added company listings and details, implemented list of companies in user profile.
 
 In order to run an application as a container: 
 ```bash

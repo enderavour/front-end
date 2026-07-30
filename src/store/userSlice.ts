@@ -71,7 +71,7 @@ export const deleteUser = createAsyncThunk<
 
     return userId;
   }
-)
+);
 
 const usersSlice = createSlice({
   name: "users",
@@ -127,7 +127,7 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsersById.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message ?? "Failed to fetch fetch user";
+        state.error = action.error.message ?? "Failed to fetch user";
       })
   }
 });

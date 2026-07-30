@@ -1,4 +1,3 @@
-import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { fetchUsers } from "../../store/userSlice";
@@ -6,9 +5,9 @@ import { UserCard } from "../../components/Users/UserCard";
 import { useState } from "react";
 import { Grid } from "@mui/system";
 import { PagePagination } from "../../components/Pagination";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
-const Users = () => {
+export const Users = () => {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
   const limit = 10;
@@ -24,19 +23,17 @@ const Users = () => {
 
   const totalPages = Math.ceil(total / limit);
 
-  const { t } = useTranslation();
-
   const currentUserId = useAppSelector(
       (state) => state.auth.userId
   );
 
-    if (loading) {
-      return <p>Loading...</p>;
-    }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-    if (error) {
-      return <p>{error}</p>;
-    }
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <>
@@ -72,5 +69,3 @@ const Users = () => {
     </>
   );
 };
-
-export { Users };

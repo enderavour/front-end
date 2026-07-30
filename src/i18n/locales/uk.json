@@ -26,11 +26,11 @@
     "page": "Сторінка не знайдена.",
     "user": "Користувач не знайдений."
   },
-  "userprofile": {
+  "profile": {
     "name": "Ім'я",
-    "email": "Електронна пошта",
     "company": "Компанія",
-    "address": "Адреса",
+    "description": "Опис",
+    "visible": "Видима",
     "save": "Зберегти"
   },
   "modal": {
@@ -58,7 +58,37 @@
   "userProfile": {
     "edit": "Редагувати профіль",
     "view": "Переглянути профіль",
-    "delete": "Видалити профіль"
+    "delete": "Видалити профіль",
+    "avatar_url": "URL аватару"
+  },
+  "company_card": {
+    "view": "Переглянути",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "create_company": "Додати компанію",
+    "edit_company": "Редагувати параметри",
+    "label_name": "Ім'я",
+    "label_description": "Опис",
+    "label_visible": "Видима",
+    "save": "Зберегти",
+    "nodesc": "Немає опису"
+  },
+  "company_is_visible": {
+    "yes": "Так",
+    "no": "Ні"
+  },
+  "delete_modal": {
+    "delete_title": "Видалити",
+    "delete_confirmation": "Ви впевнені, що хочете видалити",
+    "delete": "Видалити",
+    "cancel": "Скасувати"
+  },
+  "create_modal": {
+    "create_title": "Створити компанію",
+    "company_name": "Назва компанії",
+    "description": "Опис",
+    "visible": "Видима",
+    "create": "Створити"
   },
   "delete": {
     "del_title": "Видалити користувача",
@@ -66,5 +96,11 @@
     "del": "Видалити",
     "can": "Скасувати",
     "del_prof": "Видалити профіль"
+  },
+  "user_company_list": {
+    "no_companies": "Немає компаній",
+    "companies": "Компанії",
+    "leave_company": "Покинути компанію",
+    "cannot": "Неможливо покинути компанію"
   }
 }

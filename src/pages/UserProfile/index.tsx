@@ -12,6 +12,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
+import { UserCompanyList } from "../../components/Company/UserCompanyList";
 
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import {
@@ -19,6 +20,7 @@ import {
   updateUser,
   deleteUser
 } from "../../store/userSlice";
+import { useGetUserCompaniesQuery } from "../../store/companyApi";
 
 import { AppModal } from "../../components/ui/AppModal";
 
@@ -47,6 +49,9 @@ const UserProfile = () => {
 
   const [username, setUsername] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
+
+  const { data: companies, isLoading } = useGetUserCompaniesQuery(Number(id), { skip: !id });
+
 
   useEffect(() => {
     if (id) {
@@ -160,7 +165,7 @@ const UserProfile = () => {
               color="text.secondary"
               sx={{ mt: 1 }}
             >
-              {t("userprofile.email")}: {selectedUser.email}
+              {t("registration.email")}: {selectedUser.email}
             </Typography>
 
 
@@ -187,12 +192,12 @@ const UserProfile = () => {
             >
 
               <Typography variant="h5">
-                {t("userprofile.edit")}
+                {t("userProfile.edit")}
               </Typography>
 
 
               <TextField
-                label="Username"
+                label={t("profile.name")}
                 value={username}
                 onChange={(e) =>
                   setUsername(e.target.value)
@@ -201,7 +206,7 @@ const UserProfile = () => {
 
 
               <TextField
-                label="About"
+                label={t("company_card.label_description")}
                 multiline
                 rows={4}
                 value={about}
@@ -212,7 +217,7 @@ const UserProfile = () => {
 
 
               <TextField
-                label="Avatar URL"
+                label={t("userProfile.avatar_url")}
                 value={avatar}
                 onChange={(e) =>
                   setAvatar(e.target.value)
@@ -237,7 +242,7 @@ const UserProfile = () => {
                 variant="contained"
                 onClick={handleSave}
               >
-                {t("userprofile.save")}
+                {t("profile.save")}
               </Button>
 
 
@@ -256,7 +261,9 @@ const UserProfile = () => {
 
       </Paper>
 
-
+      <UserCompanyList
+        companies={companies?.companies ?? []}
+      />
 
       <AppModal
         title={t("delete.del_title")}
