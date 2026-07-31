@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import {
   Button,
   Container,
@@ -9,11 +9,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { SocialAuth } from "../../components/auth/SocialAuth";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/apiService";
-import { Header } from "../../layouts/Header";
+import { Header } from "../../components/layout/Header";
 import { Alert } from "@mui/material";
 import axios from "axios";
 
-const Registration = () => {
+export const Registration = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -119,5 +119,3 @@ const Registration = () => {
     </>
   );
 };
-
-export { Registration };

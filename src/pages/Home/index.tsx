@@ -1,14 +1,10 @@
-import { Button, Container, Typography } from '@mui/material';
-import { REACT_APP_APP_NAME } from '../../App';
+import { Container, Typography } from '@mui/material';
+import { REACT_APP_APP_NAME } from '../../utils/constants';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import { healthCheck } from '../../api/health';
-import { useEffect } from "react";
 
-function onButtonPress() {
-  window.alert('Welcome to my application!');
-}
-
-const Home = () => {
+export const Home = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -27,11 +23,6 @@ const Home = () => {
         {REACT_APP_APP_NAME}
       </Typography>
 
-      <Button variant="contained" onClick={onButtonPress}>
-        {t("home.begin")}
-      </Button>
     </Container>
   );
 };
-
-export { Home };

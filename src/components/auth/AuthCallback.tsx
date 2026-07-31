@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { login } from "../../store/authSlice";
 import axiosInstance from "../../api/apiService";
-import { saveAuth } from "../../utils/authStorage";
+import { saveToStorage } from "../../utils/authStorage";
 
 const AuthCallback = () => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const AuthCallback = () => {
         };
 
         dispatch(login(authData));
-        saveAuth(
+        saveToStorage(
           authData.token,
           authData.expiresAt,
           authData.userId

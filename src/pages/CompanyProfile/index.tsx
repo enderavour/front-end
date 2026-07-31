@@ -6,7 +6,7 @@ import { useAppSelector } from "../../hooks/hooks";
 import { fetchCompanyById } from "../../store/companySlice";
 import { useEffect } from "react";
 
-const CompanyProfile = () => {
+export const CompanyProfile = () => {
   const { id } = useParams();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
@@ -49,5 +49,3 @@ const CompanyProfile = () => {
     </Container>
   );
 };
-
-export { CompanyProfile };

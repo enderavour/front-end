@@ -9,7 +9,7 @@ const navigationItems = [
   { label: "navigation.companies", path: "/companies" }
 ];
 
-const Navigation = () => {
+export const Navigation = () => {
   const { t } = useTranslation();
 
   return (
@@ -33,5 +33,3 @@ const Navigation = () => {
       </Box>
   )
 }
-
-export { Navigation };

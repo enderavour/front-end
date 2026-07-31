@@ -3,7 +3,7 @@ import { Google, GitHub, Facebook } from "@mui/icons-material"
 import { IconButton } from "@mui/material";
 import { handleGoogleLogin } from "../../utils/googleAuth";
 
-const SocialAuth = () => {
+export const SocialAuth = () => {
   return (
     <Stack
       direction="row"
@@ -30,5 +30,3 @@ const SocialAuth = () => {
     </Stack>
   );
 };
-
-export { SocialAuth };

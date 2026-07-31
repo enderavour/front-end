@@ -3,17 +3,17 @@ import { LanguageSelect } from "../../components/ui/LanguageSelect";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/hooks";
 import { logout } from "../../store/authSlice";
-import { clearAuth } from "../../utils/authStorage";
+import { clearStorage } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
 
-const Header = () => {
+export const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const handleLogout = () => {
     dispatch(logout());
-    clearAuth();
+    clearStorage();
     navigate("/login");
   };
 
@@ -33,5 +33,3 @@ const Header = () => {
     </AppBar>
   )
 };
-
-export { Header };

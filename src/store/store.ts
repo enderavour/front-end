@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import stringReducer from "./slice";
 import authReducer from "./authSlice";
 import usersReducer from "./userSlice";
 import companyReducer from "./companySlice";
@@ -7,7 +6,6 @@ import { companyApi } from "./companyApi";
 
 export const store = configureStore({
   reducer: {
-    string: stringReducer,
     auth: authReducer,
     users: usersReducer,
     companies: companyReducer,

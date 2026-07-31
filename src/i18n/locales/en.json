@@ -24,7 +24,8 @@
   },
   "notfound": {
     "page": "Page not found.",
-    "user": "User not found."
+    "user": "User not found.",
+    "company": "Company not found."
   },
   "profile": {
     "name": "Name",
@@ -36,10 +37,14 @@
   "modal": {
     "close": "Close"
   },
+  "errors": {
+    "invalidEmail": "Enter a valid email"
+  },
   "auth": {
     "login": "Login",
     "register": "Register",
-    "no_account": "Don't have an account?"
+    "no_account": "Don't have an account?",
+    "already_account": "Already have an account?"
   },
   "reg": {
     "registration": "Registration",

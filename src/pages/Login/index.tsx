@@ -4,13 +4,13 @@ import { login } from "../../store/authSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, TextField, Typography, Container, Alert } from "@mui/material";
 import { SocialAuth } from "../../components/auth/SocialAuth";
-import { saveAuth } from "../../utils/authStorage";
+import { saveToStorage } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/apiService";
-import { Header } from "../../layouts/Header";
+import { Header } from "../../components/layout/Header";
 import axios from "axios";
 
-const Login = () => {
+export const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,7 +54,7 @@ const Login = () => {
 
       dispatch(login(authData));
 
-      saveAuth(
+      saveToStorage(
         authData.token,
         authData.expiresAt,
         authData.userId
@@ -136,5 +136,3 @@ const Login = () => {
     </>
   );
 };
-
-export { Login };

@@ -24,7 +24,7 @@ import { useGetUserCompaniesQuery } from "../../store/companyApi";
 
 import { AppModal } from "../../components/ui/AppModal";
 
-const UserProfile = () => {
+export const UserProfile = () => {
   const { id } = useParams();
   const { t } = useTranslation();
 
@@ -302,6 +302,3 @@ const UserProfile = () => {
     </Container>
   );
 };
-
-
-export { UserProfile };

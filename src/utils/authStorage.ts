@@ -1,11 +1,11 @@
-export const saveAuth = (token: string, expiresAt: number, userId: number) => {
+export const saveToStorage = (token: string, expiresAt: number, userId: number) => {
   localStorage.setItem("token", token);
   localStorage.setItem("expiresAt", String(expiresAt));
   localStorage.setItem("userId", String(userId));
 };
 
 
-export const loadAuth = () => {
+export const getFromStorage = () => {
   const token = localStorage.getItem("token");
   const expiresAt = localStorage.getItem("expiresAt");
   const userId = localStorage.getItem("userId");
@@ -21,7 +21,7 @@ export const loadAuth = () => {
   };
 };
 
-export const clearAuth = () => {
+export const clearStorage = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expiresAt");
   localStorage.removeItem("userId");
