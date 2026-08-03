@@ -1,6 +1,6 @@
-# FE #5: Add state manager 
+# FE #7: Authorization and Token Management
 
-Integrated Redux Toolkit, created slice and store to modify text on button click using useDispatch and useSelector. 
+Developed Login and Registration pages, set up PrivateRoute, implemented slice in Redux store for storing tokens, developed Login and Registration pages. 
 
 In order to run an application as a container: 
 ```bash

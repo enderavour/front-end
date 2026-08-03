@@ -3,19 +3,10 @@ name: React CI
 on:
   push:
     branches:
-      - develop
-      - FE-2-add-dockerfile
-      - FE-3-add-common-pages
-      - FE-4-implement-transition
-      - FE-5-add-state-manager
-      - main
+      - "**"
   pull_request:
     branches:
       - develop
-      - FE-2-add-dockerfile
-      - FE-3-add-common-pages
-      - FE-4-implement-transition
-      - FE-5-add-state-manager
       - main
 env:
   CI: false
