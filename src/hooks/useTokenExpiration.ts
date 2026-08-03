@@ -1,13 +1,9 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { useAppDispatch, useAppSelector } from "./hooks";
-import { logout } from "../store/authSlice";
-import { clearAuth } from "../utils/authStorage";
+import { useAppSelector } from "./hooks";
+import { useLogout } from "./logout";
 
 export const useTokenExpiration = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const invokeLogout = useLogout();
 
   const expiresAt = useAppSelector(
     (state) => state.auth.expiresAt
@@ -19,19 +15,15 @@ export const useTokenExpiration = () => {
     const remainingTime = expiresAt - Date.now();
 
     if (remainingTime <= 0) {
-      dispatch(logout());
-      clearAuth();
-      navigate("/login");
+      invokeLogout();
       return;
     }
 
     const timer = setTimeout(() => {
-      dispatch(logout());
-      clearAuth();
-      navigate("/login");
+      invokeLogout();
     }, remainingTime);
 
     return () => clearTimeout(timer);
 
-  }, [dispatch, expiresAt, navigate]);
+  }, [expiresAt, invokeLogout]);
 };

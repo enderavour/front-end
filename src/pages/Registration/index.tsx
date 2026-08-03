@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import {
   Button,
   Container,
@@ -13,7 +13,7 @@ import { Header } from "../../layouts/Header";
 import { Alert } from "@mui/material";
 import axios from "axios";
 
-const Registration = () => {
+export const Registration = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -119,5 +119,3 @@ const Registration = () => {
     </>
   );
 };
-
-export { Registration };

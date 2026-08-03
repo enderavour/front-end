@@ -16,7 +16,7 @@ interface AppModalProps
 };
 
 
-const AppModal = ({
+export const AppModal = ({
   open, title, onClose, children
 }: AppModalProps) => {
   const { t } = useTranslation();
@@ -37,5 +37,3 @@ const AppModal = ({
     </Dialog>
   )
 };
-
-export { AppModal };

@@ -72,5 +72,3 @@ const Users = () => {
     </>
   );
 };
-
-export { Users };

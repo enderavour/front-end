@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loadAuth } from "../utils/authStorage";
+import { getFromStorage } from "../utils/authStorage";
 
 interface AuthState
 {
@@ -18,7 +18,7 @@ interface LoginPayload
   userId: number | null
 };
 
-const auth = loadAuth();
+const auth = getFromStorage();
 
 const initialState: AuthState = auth ?? {
   token: null,

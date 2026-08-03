@@ -33,5 +33,3 @@ const Header = () => {
     </AppBar>
   )
 };
-
-export { Header };

@@ -13,7 +13,7 @@ import { Login } from "../pages/Login";
 import { Registration } from "../pages/Registration";
 import { AuthCallback } from "../components/auth/AuthCallback";
 
-const AppRouter = () => {
+export const AppRouter = () => {
     return (
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -25,9 +25,9 @@ const AppRouter = () => {
             <Route index element={<Home />} />
             <Route path={AddRoutes.ABOUT} element={<About />} />
             <Route path={AddRoutes.USERS} element={<Users />} />
-            <Route path={AddRoutes.USERS_ID} element={<UserProfile />} />
+            <Route path="users/:id" element={<UserProfile />} />
             <Route path={AddRoutes.COMPANIES} element={<Companies />} />
-            <Route path={AddRoutes.COMPANIES_ID} element={<CompanyProfile />} />
+            <Route path="companies/:id" element={<CompanyProfile />} />
           </Route>
         </Route>
 
@@ -35,5 +35,3 @@ const AppRouter = () => {
       </Routes>
     );
 };
-
-export { AppRouter };

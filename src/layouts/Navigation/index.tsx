@@ -33,5 +33,3 @@ const Navigation = () => {
       </Box>
   )
 }
-
-export { Navigation };

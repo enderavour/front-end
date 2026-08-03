@@ -2,8 +2,9 @@ import { Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { companies } from "../../mocks/companies";
 import { useTranslation } from "react-i18next";
+import { EntityNotFound } from "../../components/EntityNotFound";
 
-const CompanyProfile = () => {
+export const CompanyProfile = () => {
   const { id } = useParams();
   const { t } = useTranslation();
 
@@ -11,31 +12,24 @@ const CompanyProfile = () => {
     (company) => company.id === Number(id)
   );
 
-  if (!company) {
-    return (
-      <Container sx={{ mt: 4 }}>
-        <Typography variant="h4">
-          {t("notfound.user")}
-        </Typography>
-      </Container>
-    );
+  if (!company)
+  {
+    return <EntityNotFound />;
   }
 
   return (
     <Container sx={{ mt: 4 }}>
       <Typography variant="h3">
-        {t("userprofile.name")}: {company.name}
+        {t("profile.name")}: {company.name}
       </Typography>
 
       <Typography>
-        {t("userprofile.email")}: {company.email}
+        {t("profile.email")}: {company.email}
       </Typography>
 
       <Typography>
-        {t("userprofile.address")}: {company.address}
+        {t("profile.address")}: {company.address}
       </Typography>
     </Container>
   );
 };
-
-export { CompanyProfile };
