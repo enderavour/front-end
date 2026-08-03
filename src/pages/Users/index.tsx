@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Grid } from "@mui/system";
-import { PagePagination } from "../../components/Pagination";
+import { Pagination } from "@mui/material";
 
 export const Users = () => {
   const [page, setPage] = useState(1);
@@ -55,10 +55,10 @@ export const Users = () => {
           mt: 3,
         }}
       >
-        <PagePagination
+        <Pagination
+          count={totalPages}
           page={page}
-          totalPages={totalPages}
-          onChange={setPage}
+          onChange={(_, value) => setPage(value)}
         />
       </Box>
     </>

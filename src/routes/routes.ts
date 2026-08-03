@@ -7,3 +7,8 @@ export enum AddRoutes
   REGISTER = "/register",
   LOGIN = "/login"
 };
+
+export enum ApiRoutes
+{
+  USERS_ME = "/users/me"
+}

@@ -4,8 +4,11 @@ import { useAppDispatch } from "../../hooks/hooks";
 import { login } from "../../store/authSlice";
 import axiosInstance from "../../api/apiService";
 import { setToStorage } from "../../utils/authStorage";
+import { AddRoutes } from "../../routes/routes";
+import { getCurrentUser } from "../../services/userService";
+import { Loader } from "../ui/Loader";
 
-const AuthCallback = () => {
+export const AuthCallback = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -15,14 +18,14 @@ const AuthCallback = () => {
       const token = params.get("token");
 
       if (!token) {
-        navigate("/login");
+        navigate(AddRoutes.LOGIN);
         return;
       }
 
       axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       try {
-        const response = await axiosInstance.get("/users/me");
+        const response = await getCurrentUser();
 
         const authData = {
           token,
@@ -37,17 +40,15 @@ const AuthCallback = () => {
           authData.userId
         );
 
-        navigate("/");
+        navigate(AddRoutes.ROOT);
       } catch (error) {
         console.error(error);
-        navigate("/login");
+        navigate(AddRoutes.LOGIN);
       }
     };
 
     handleAuth();
   }, [dispatch, navigate]);
 
-  return <p>Loading...</p>;
+  return <Loader />;
 };
-
-export { AuthCallback };

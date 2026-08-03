@@ -13,6 +13,7 @@ import axiosInstance from "../../api/apiService";
 import axios from "axios";
 import { Header } from "../../layouts/Header";
 import { Alert } from "@mui/material";
+import { AddRoutes } from "../../routes/routes";
 
 export const Registration = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export const Registration = () => {
         password
       });
 
-      navigate("/login");
+      navigate(AddRoutes.LOGIN);
     }
     catch (e)
     {
