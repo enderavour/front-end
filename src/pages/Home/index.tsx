@@ -3,8 +3,14 @@ import { REACT_APP_APP_NAME } from '../../utils/constants';
 import { useTranslation } from 'react-i18next';
 
 
-export const Home = () => {
-  const { t } = useTranslation()
+const Home = () => {
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    healthCheck()
+      .then((res) => console.log(res.data))
+      .catch((err) => console.error(err))
+  }, []);
 
   return (
     <Container maxWidth="md">

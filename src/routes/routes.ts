@@ -4,6 +4,6 @@ export enum AddRoutes
   ABOUT = "about",
   USERS = "users",
   COMPANIES = "companies",
-  REGISTER = "/register",
-  LOGIN = "/login"
+  COMPANIES_ID = "companies/:id",
+  AUTH_CALLBACK = "auth/callback"
 };

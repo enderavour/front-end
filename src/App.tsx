@@ -4,9 +4,7 @@ import { useAppDispatch } from './hooks/hooks';
 import { useTokenExpiration } from './hooks/useTokenExpiration';
 
 
-function App()
-{
-  const dispatch = useAppDispatch();
+function App() {
   useTokenExpiration();
 
   return <AppRouter />;
