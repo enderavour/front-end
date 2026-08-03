@@ -5,7 +5,7 @@ import {
   DialogActions,
   Button
 } from "@mui/material";
-
+import { useTranslation } from "react-i18next";
 
 interface AppModalProps
 {
@@ -16,9 +16,11 @@ interface AppModalProps
 };
 
 
-const AppModal = ({
+export const AppModal = ({
   open, title, onClose, children
 }: AppModalProps) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>{title}</DialogTitle>
@@ -29,11 +31,9 @@ const AppModal = ({
 
       <DialogActions>
         <Button onClick={onClose}>
-          Close
+          {t("modal.close")}
         </Button>
       </DialogActions>
     </Dialog>
   )
 };
-
-export default AppModal;

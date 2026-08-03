@@ -16,6 +16,7 @@
     "text": "This project was created as a part of internship."
   },
   "users": {
+    "loading": "Loading...",
     "title": "Users"
   },
   "companies": {
@@ -23,15 +24,52 @@
   },
   "notfound": {
     "page": "Page not found.",
-    "user": "User not found."
+    "user": "User not found.",
+    "company": "Company not found."
   },
-  "userprofile": {
+  "profile": {
     "name": "Name",
     "email": "Email",
     "company": "Company",
-    "address": "Address"
+    "address": "Address",
+    "save": "Save"
   },
   "modal": {
     "close": "Close"
+  },
+  "errors": {
+    "invalidEmail": "Enter a valid email"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "no_account": "Don't have an account?",
+    "already_account": "Already have an account?"
+  },
+  "reg": {
+    "registration": "Registration",
+    "have_account": "Already have an account?"
+  },
+  "logout": "Logout",
+  "login": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "registration": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password"
+  },
+  "userProfile": {
+    "edit": "Edit profile",
+    "view": "View profile",
+    "delete": "Delete profile"
+  },
+  "delete": {
+    "del_title": "Delete User",
+    "del_question": "Are you sure you want to delete your profile?",
+    "del": "Delete",
+    "can": "Cancel",
+    "del_prof": "Delete profile"
   }
 }

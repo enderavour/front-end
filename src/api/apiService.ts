@@ -5,12 +5,11 @@ const axiosInstance = axios.create({
   timeout: 20000,
   headers: {
     "Content-Type": "application/json",
-    "Accept": "application/json"
+    "Accept": "application/json",
   }
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  console.log(`Request: ${config.url}`);
   return config;
 });
 
