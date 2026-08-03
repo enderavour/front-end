@@ -23,9 +23,9 @@ export const AppRouter = () => {
             <Route index element={<Home />} />
             <Route path={AddRoutes.ABOUT} element={<About />} />
             <Route path={AddRoutes.USERS} element={<Users />} />
-            <Route path="users/:id" element={<UserProfile />} />
+            <Route path={`${AddRoutes.USERS}/:id`} element={<UserProfile />} />
             <Route path={AddRoutes.COMPANIES} element={<Companies />} />
-            <Route path="companies/:id" element={<CompanyProfile />} />
+            <Route path={`${AddRoutes.COMPANIES}/:id`} element={<CompanyProfile />} />
           </Route>
         </Route>
 

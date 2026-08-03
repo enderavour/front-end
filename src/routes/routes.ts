@@ -3,7 +3,7 @@ export enum AddRoutes
   ROOT = "/",
   ABOUT = "about",
   USERS = "users",
-  COMPANIES = "companies",
+  COMPANIES = "/companies",
   REGISTER = "/register",
   LOGIN = "/login"
 };

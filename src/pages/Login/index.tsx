@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { login } from "../../store/authSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button, TextField, Typography, Container } from "@mui/material";
+import { Button, TextField, Typography, Container, Alert } from "@mui/material";
 import { SocialAuth } from "../../components/auth/SocialAuth";
 import { setToStorage } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
 import { emailRegex } from "../../utils/regex";
 import { AddRoutes } from "../../routes/routes";
+import axiosInstance from "../../api/apiService";
+import axios from "axios";
+import { Header } from "../../layouts/Header";
 
 export const Login = () => {
   const dispatch = useAppDispatch();
@@ -18,53 +21,105 @@ export const Login = () => {
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
 
     if (!emailRegex.test(email)) {
       setEmailError(true);
       return;
     }
 
-    const authData = {
-      token: "fake-token",
-      expiresAt: Date.now() + 60 * 60 * 1000
-    };
+    try
+    {
+      const response = await axiosInstance.post("/auth/signin", {
+        email, password
+      });
 
-    dispatch(login(authData));
+      const {
+        access_token,
+        user_id
+      } = response.data;
 
-    setToStorage(
-      authData.token,
-      authData.expiresAt
-    );
+      const authData = {
+        token: access_token,
+        expiresAt: Date.now() + 60 * 60 * 1000,
+        userId: user_id
+      };
 
-    navigate(from, { replace: true });
+      setToStorage(
+        authData.token,
+        authData.expiresAt,
+        authData.userId
+      );
+
+      dispatch(login(authData));
+
+      setToStorage(
+        authData.token,
+        authData.expiresAt,
+        authData.userId
+      );
+
+      navigate(from, { replace: true });
+    }
+    catch (e)
+    {
+      if (axios.isAxiosError(e))
+        setError(e.response?.data?.detail ?? "Login Failed");
+      else
+        setError("Unknown error");
+    }
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        {t("auth.login")}
-      </Typography>
+    <>
+      <Header/>
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          {t("auth.login")}
+        </Typography>
 
-      <TextField
-        fullWidth
-        label="Email"
-        margin="normal"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setEmailError(false);
-        }}
-        error={emailError}
-        helperText={
-          emailError
-            ? "Enter a valid email"
-            : ""
-        }
-      />
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <TextField
+            fullWidth
+            label={t("login.email")}
+            margin="normal"
+            value={email}
+            onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailError(false);
+                setError("");
+            }}
+            error={emailError}
+            helperText={
+                emailError
+                ? "Enter a valid email"
+                : ""
+            }
+        />
+
+        <TextField
+            fullWidth
+            label={t("login.password")}
+            type="password"
+            margin="normal"
+            value={password}
+            onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+            }}
+        />
+
 
       <Button
         fullWidth
@@ -82,7 +137,8 @@ export const Login = () => {
         </Link>
       </Typography>
 
-      <SocialAuth />
-    </Container>
+        <SocialAuth />
+      </Container>
+    </>
   );
 };

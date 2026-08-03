@@ -4,8 +4,8 @@ import { Snackbar, Alert } from "@mui/material";
 
 export const HealthStatus = () => {
   const [open, setOpen] = useState(false);
-  const [success, setSuccess] = useState(true);
-  const [message, setMessage] = useState("");
+  const [success] = useState(true);
+  const [message] = useState("");
 
   useEffect(() => {
     healthCheck()
