@@ -16,6 +16,7 @@
     "text": "Цей проект був створений для стажування."
   },
   "users": {
+    "loading": "Завантаження...",
     "title": "Користувачі"
   },
   "companies": {
@@ -26,17 +27,21 @@
     "user": "Користувач не знайдений.",
     "company": "Компанія не знайдена."
   },
-  "userprofile": {
+  "profile": {
     "name": "Ім'я",
-    "email": "Електронна пошта",
     "company": "Компанія",
-    "address": "Адреса"
+    "description": "Опис",
+    "visible": "Видима",
+    "save": "Зберегти"
   },
   "modal": {
     "close": "Закрити"
   },
   "errors": {
-    "invalidEmail": "Введіть правильну електронну пошту"
+    "invalidEmail": "Введіть правильну електронну пошту",
+    "regFailed": "Реєстрація не вдалась",
+    "loginFailed": "Логін не вдався",
+    "invalidPassword": "Пароль не надійний"
   },
   "auth": {
     "login": "Логін",
@@ -45,6 +50,75 @@
      "already_account": "Вже маєте акаунт?"
   },
   "reg": {
-    "registration": "Реєстрація"
+    "registration": "Реєстрація",
+    "have_account": "Вже маєте акаунт?"
+  },
+  "logout": "Вийти",
+  "login": {
+    "email": "Е-пошта",
+    "password": "Пароль"
+  },
+  "registration": {
+    "name": "Ім'я",
+    "email": "Е-пошта",
+    "password": "Пароль"
+  },
+  "userProfile": {
+    "edit": "Редагувати профіль",
+    "view": "Переглянути профіль",
+    "delete": "Видалити профіль",
+    "avatar_url": "URL аватару"
+  },
+  "company_card": {
+    "view": "Переглянути",
+    "edit": "Редагувати",
+    "delete": "Видалити",
+    "create_company": "Додати компанію",
+    "edit_company": "Редагувати параметри",
+    "label_name": "Ім'я",
+    "label_description": "Опис",
+    "label_visible": "Видима",
+    "save": "Зберегти",
+    "nodesc": "Немає опису"
+  },
+  "company_is_visible": {
+    "yes": "Так",
+    "no": "Ні"
+  },
+  "delete_modal": {
+    "delete_title": "Видалити",
+    "delete_confirmation": "Ви впевнені, що хочете видалити",
+    "delete": "Видалити",
+    "cancel": "Скасувати"
+  },
+  "create_modal": {
+    "create_title": "Створити компанію",
+    "company_name": "Назва компанії",
+    "description": "Опис",
+    "visible": "Видима",
+    "create": "Створити"
+  },
+  "delete": {
+    "del_title": "Видалити користувача",
+    "del_question": "Ви впевнені, що хочете видалити профіль?",
+    "del": "Видалити",
+    "can": "Скасувати",
+    "del_prof": "Видалити профіль"
+  },
+  "user_company_list": {
+    "no_companies": "Немає компаній",
+    "companies": "Компанії",
+    "leave_company": "Покинути компанію",
+    "cannot": "Неможливо покинути компанію"
+  },
+  "company_visibility": {
+    "public": "Публічна",
+    "private": "Приватна"
+  },
+  "common": {
+    "creating": "Створення...",
+    "deleting": "Видалення...",
+    "saving": "Зберігання...",
+    "leaving": "Покидання..."
   }
 }

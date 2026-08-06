@@ -3,6 +3,7 @@ import { clearStorage } from "../utils/authStorage";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../store/authSlice";
 import { useCallback } from "react";
+import { AddRoutes } from "../routes/routes";
 
 export const useLogout = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,6 @@ export const useLogout = () => {
   return useCallback(() => {
     dispatch(logout());
     clearStorage();
-    navigate("/login");
+    navigate(AddRoutes.LOGIN);
   }, [dispatch, navigate]);
 }

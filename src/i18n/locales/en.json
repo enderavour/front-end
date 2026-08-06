@@ -16,6 +16,7 @@
     "text": "This project was created as a part of internship."
   },
   "users": {
+    "loading": "Loading...",
     "title": "Users"
   },
   "companies": {
@@ -28,15 +29,19 @@
   },
   "profile": {
     "name": "Name",
-    "email": "Email",
     "company": "Company",
-    "address": "Address"
+    "description": "Description",
+    "visible": "Is Visible",
+    "save": "Save"
   },
   "modal": {
     "close": "Close"
   },
   "errors": {
-    "invalidEmail": "Enter a valid email"
+    "invalidEmail": "Enter a valid email",
+    "regFailed": "Registration failed",
+    "loginFailed": "Login Failed",
+    "invalidPassword": "Password not strong enough"
   },
   "auth": {
     "login": "Login",
@@ -45,6 +50,75 @@
     "already_account": "Already have an account?"
   },
   "reg": {
-    "registration": "Registration"
+    "registration": "Registration",
+    "have_account": "Already have an account?"
+  },
+  "logout": "Logout",
+  "login": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "registration": {
+    "name": "Name",
+    "email": "Email",
+    "password": "Password"
+  },
+  "company_is_visible": {
+    "yes": "Yes",
+    "no": "No"
+  },
+  "userProfile": {
+    "edit": "Edit profile",
+    "view": "View profile",
+    "delete": "Delete profile",
+    "avatar_url": "Avatar URL"
+  },
+  "company_card": {
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create_company": "Add company",
+    "edit_company": "Edit company",
+    "label_name": "Name",
+    "label_description": "Description",
+    "label_visible": "Visible",
+    "save": "Save",
+    "nodesc": "No Description"
+  },
+  "delete_modal": {
+    "delete_title": "Delete",
+    "delete_confirmation": "Are you sure you want to delete",
+    "delete": "Delete",
+    "cancel": "Cancel"
+  },
+  "create_modal": {
+    "create_title": "Create company",
+    "company_name": "Company name",
+    "description": "Description",
+    "visible": "Visible",
+    "create": "Create"
+  },
+  "delete": {
+    "del_title": "Delete User",
+    "del_question": "Are you sure you want to delete your profile?",
+    "del": "Delete",
+    "can": "Cancel",
+    "del_prof": "Delete profile"
+  },
+  "user_company_list": {
+    "no_companies": "No companies",
+    "companies": "Companies",
+    "leave_company": "Leave Company",
+    "cannot": "Cannot leave company"
+  },
+  "company_visibility": {
+    "public": "Public",
+    "private": "Private"
+  },
+  "common": {
+    "creating": "Creating...",
+    "deleting": "Deleting...",
+    "saving": "Saving...",
+    "leaving": "Leaving..."
   }
 }

@@ -2,12 +2,15 @@ import { useState } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
 import { login } from "../../store/authSlice";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button, TextField, Typography, Container } from "@mui/material";
+import { Button, TextField, Typography, Container, Alert } from "@mui/material";
 import { SocialAuth } from "../../components/auth/SocialAuth";
-import { setToStorage } from "../../utils/authStorage";
+import { saveToStorage } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
-import { emailRegex } from "../../utils/regex";
+import axiosInstance from "../../api/apiService";
+import { Header } from "../../layouts/Header";
+import axios from "axios";
 import { AddRoutes } from "../../routes/routes";
+import { validateAuthForm } from "../../utils/validateAuth";
 
 export const Login = () => {
   const dispatch = useAppDispatch();
@@ -18,71 +21,131 @@ export const Login = () => {
 
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
+  const [error, setError] = useState("");
 
   const from = location.state?.from?.pathname || "/";
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
+    setError("");
 
-    if (!emailRegex.test(email)) {
+    const { emailValid, passwordValid } = validateAuthForm(email, password);
+
+    if (!emailValid) {
       setEmailError(true);
       return;
     }
 
-    const authData = {
-      token: "fake-token",
-      expiresAt: Date.now() + 60 * 60 * 1000
-    };
+    if (!passwordValid) {
+      setPasswordError(true);
+      return;
+    }
 
-    dispatch(login(authData));
+    try
+    {
+      const response = await axiosInstance.post(AddRoutes.AUTH_SIGNIN, {
+        email, password
+      });
 
-    setToStorage(
-      authData.token,
-      authData.expiresAt
-    );
+      const {
+        access_token,
+        user_id
+      } = response.data;
 
-    navigate(from, { replace: true });
+      const authData = {
+        token: access_token,
+        userId: user_id
+      };
+
+      dispatch(login(authData));
+
+      saveToStorage(
+        authData.token,
+        authData.userId
+      );
+
+      navigate(from, { replace: true });
+    }
+    catch (e)
+    {
+      if (axios.isAxiosError(e))
+        setError(e.response?.data?.detail ?? "Login Failed");
+      else
+        setError("Unknown error");
+    }
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        {t("auth.login")}
-      </Typography>
+    <>
+      <Header/>
+      <Container maxWidth="sm" sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          {t("auth.login")}
+        </Typography>
 
-      <TextField
-        fullWidth
-        label="Email"
-        margin="normal"
-        value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          setEmailError(false);
-        }}
-        error={emailError}
-        helperText={
-          emailError
-            ? "Enter a valid email"
-            : ""
-        }
-      />
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
-      <Button
-        fullWidth
-        variant="contained"
-        onClick={handleLogin}
-        sx={{ pt: 2 }}
-      >
-        {t("auth.login")}
-      </Button>
+        <TextField
+          fullWidth
+          label={t("login.email")}
+          margin="normal"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setEmailError(false);
+            setError("");
+          }}
+          error={emailError}
+          helperText={
+            emailError
+              ? t("errors.invalidEmail")
+              : ""
+          }
+        />
 
-      <Typography sx={{ pt: 2 }}>
-        {t("auth.no_account")}{" "}
-        <Link to={AddRoutes.REGISTER}>
-          {t("auth.register")}
-        </Link>
-      </Typography>
+        <TextField
+          fullWidth
+          label={t("login.password")}
+          type="password"
+          margin="normal"
+          value={password}
+          error={passwordError}
+          helperText={
+            passwordError
+              ? t("errors.invalidPassword")
+              : ""
+          }
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setPasswordError(false);
+            setError("");
+          }}
+        />
 
-      <SocialAuth />
-    </Container>
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={handleLogin}
+          sx={{ mt: 2 }}
+        >
+          {t("auth.login")}
+        </Button>
+
+        <Typography sx={{ mt: 2 }}>
+          {t("auth.no_account")}{" "}
+          <Link to={AddRoutes.REGISTER}>
+            {t("auth.register")}
+          </Link>
+        </Typography>
+
+        <SocialAuth />
+      </Container>
+    </>
   );
 };

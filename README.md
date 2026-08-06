@@ -1,6 +1,6 @@
-# FE #7: Automatization and Token Management
+# FE #9: Add Company CRUD
 
-Developed Login and Registration pages, set up PrivateRoute, implemented slice in Redux store for storing tokens, developed Login and Registration pages. 
+Created Company feature, added Edit and Delete options, added option to leave company, added company listings and details, implemented list of companies in user profile.
 
 In order to run an application as a container: 
 ```bash
