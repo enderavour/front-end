@@ -14,89 +14,73 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { UserCompanyList } from "../../components/Company/UserCompanyList";
 
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import {
-  fetchUsersById,
-  updateUser,
-  deleteUser
-} from "../../store/userSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import { useGetUserCompaniesQuery } from "../../store/companyApi";
-
+import { useUpdateUserMutation, useGetUserByIdQuery, useDeleteUserMutation } from "../../store/userApi";
 import { AppModal } from "../../components/ui/AppModal";
+import { AddRoutes } from "../../routes/routes";
 
 export const UserProfile = () => {
   const { id } = useParams();
   const { t } = useTranslation();
 
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [uname, setUname] = useState("");
   const [about, setAbout] = useState("");
   const [avatar, setAvatar] = useState("");
-
-  const {
-    selectedUser,
-    loading,
-    error
-  } = useAppSelector(
-    (state) => state.users
-  );
 
   const currentUserId = useAppSelector(
     (state) => state.auth.userId
   );
 
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
 
-  const { data: companies, isLoading } = useGetUserCompaniesQuery(Number(id), { skip: !id });
+  const { data: companies, isLoading: isLoadingCompanies} = useGetUserCompaniesQuery(Number(id), { skip: !id });
+  const { data: user, isLoading: isLoadingUsers, error } = useGetUserByIdQuery(Number(id), { skip: !id });
+  const [updateUser, { isLoading: isUpdateSaving }] = useUpdateUserMutation();
+  const [deleteUser, { isLoading: isDeleteSaving }] = useDeleteUserMutation();
 
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchUsersById(Number(id)));
+    if (user) {
+      setName(user.name);
+      setAbout(user.about ?? "");
+      setAvatar(user.avatar ?? "");
     }
-  }, [dispatch, id]);
+  }, [user]);
 
-
-  useEffect(() => {
-    if (selectedUser) {
-      setUsername(selectedUser.username);
-      setAbout(selectedUser.about ?? "");
-      setAvatar(selectedUser.avatar ?? "");
-    }
-  }, [selectedUser]);
-
-
-  const handleSave = () => {
-    if (!selectedUser) return;
-
-    dispatch(
-      updateUser({
-        id: selectedUser.id,
-        data: {
-          username,
-          about,
-          avatar
-        }
-      })
-    );
+  const handleSave = async () => {
+      if (!user) return;
+      try {
+          await updateUser({
+              id: user.id,
+              data: {
+                  name,
+                  about,
+                  avatar,
+              },
+          }).unwrap();
+      } catch (e) {
+          console.error(e);
+      }
   };
 
 
-  const handleDelete = () => {
-    if (!selectedUser) return;
+  const handleDelete = async () => {
+    if (!user) return;
 
-    dispatch(deleteUser(selectedUser.id));
-
-    setOpenDelete(false);
-
-    navigate("/users");
+    try
+    {
+      await deleteUser(user.id).unwrap();
+      navigate(AddRoutes.USERS);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
 
-  if (loading) {
+  if (isLoadingUsers) {
     return (
       <Typography>
         {t("users.loading")}
@@ -105,7 +89,7 @@ export const UserProfile = () => {
   }
 
 
-  if (error || !selectedUser) {
+  if (error || !user) {
     return (
       <Container>
         <Typography variant="h4">
@@ -117,7 +101,7 @@ export const UserProfile = () => {
 
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ pt: 4 }}>
 
       <Paper
         elevation={4}
@@ -136,7 +120,7 @@ export const UserProfile = () => {
         >
 
           <Avatar
-            src={selectedUser.avatar || undefined}
+            src={user.avatar || undefined}
             sx={{
               width: 140,
               height: 140,
@@ -144,7 +128,7 @@ export const UserProfile = () => {
             }}
           >
             {
-              selectedUser.username
+              user.name
                 ?.charAt(0)
                 .toUpperCase()
             }
@@ -157,24 +141,24 @@ export const UserProfile = () => {
               variant="h3"
               sx={{ fontWeight: 700 }}
             >
-              {selectedUser.username}
+              {user.name}
             </Typography>
 
 
             <Typography
               color="text.secondary"
-              sx={{ mt: 1 }}
+              sx={{ pt: 1 }}
             >
-              {t("registration.email")}: {selectedUser.email}
+              {t("registration.email")}: {user.email}
             </Typography>
 
 
             {
-              selectedUser.about && (
+              user.about && (
                 <Typography
-                  sx={{ mt: 2 }}
+                  sx={{ pt: 2 }}
                 >
-                  {selectedUser.about}
+                  {user.about}
                 </Typography>
               )
             }
@@ -185,10 +169,10 @@ export const UserProfile = () => {
 
 
         {
-          currentUserId === selectedUser.id && (
+          currentUserId === user.id && (
             <Stack
               spacing={2}
-              sx={{ mt: 4 }}
+              sx={{ pt: 4 }}
             >
 
               <Typography variant="h5">
@@ -198,9 +182,9 @@ export const UserProfile = () => {
 
               <TextField
                 label={t("profile.name")}
-                value={username}
+                value={name}
                 onChange={(e) =>
-                  setUsername(e.target.value)
+                  setName(e.target.value)
                 }
               />
 
@@ -237,14 +221,15 @@ export const UserProfile = () => {
                 )
               }
 
-
               <Button
-                variant="contained"
-                onClick={handleSave}
+                  variant="contained"
+                  onClick={handleSave}
+                  disabled={isUpdateSaving}
               >
-                {t("profile.save")}
+                  {isUpdateSaving
+                      ? t("common.saving")
+                      : t("profile.save")}
               </Button>
-
 
               <Button
                 color="error"
@@ -261,9 +246,11 @@ export const UserProfile = () => {
 
       </Paper>
 
-      <UserCompanyList
-        companies={companies?.companies ?? []}
-      />
+      {isLoadingCompanies ? (
+          <Typography>{t("users.loadingCompanies")}</Typography>
+      ) : (
+          <UserCompanyList companies={companies?.companies ?? []} />
+      )}
 
       <AppModal
         title={t("delete.del_title")}
@@ -277,21 +264,24 @@ export const UserProfile = () => {
 
 
         <Button
-          color="error"
-          variant="contained"
-          onClick={handleDelete}
-          sx={{ mt: 2 }}
+            color="error"
+            variant="contained"
+            onClick={handleDelete}
+            disabled={isDeleteSaving}
         >
-          {t("delete.del")}
+            {isDeleteSaving
+                ? t("common.deleting")
+                : t("delete.del")}
         </Button>
 
 
         <Button
           onClick={() => setOpenDelete(false)}
           sx={{
-            mt: 2,
+            pt: 2,
             ml: 2
           }}
+          disabled={isDeleteSaving}
         >
           {t("delete.can")}
         </Button>

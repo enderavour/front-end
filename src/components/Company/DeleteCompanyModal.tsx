@@ -1,14 +1,13 @@
 import { Company } from "../../types/Company";
-import { useAppDispatch } from "../../hooks/hooks";
-import { deleteCompany } from "../../store/companySlice";
 import { AppModal } from "../ui/AppModal";
 import { Typography, Stack, Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useDeleteCompanyMutation } from "../../store/companyApi";
 
 interface DeleteCompanyProps
 {
   open: boolean;
-  company: Company | null;
+  company: Company;
   onClose: () => void;
 };
 
@@ -17,17 +16,19 @@ export const DeleteCompanyModal = ({
   company,
   onClose
 }: DeleteCompanyProps) => {
-  const dispatch = useAppDispatch();
-
   const { t } = useTranslation();
 
+  const [deleteCompany, { isLoading }] = useDeleteCompanyMutation();
+
   const handleDelete = async () => {
-    if (!company) return;
-
-    await dispatch(deleteCompany(company.id));
-
-    onClose();
-  }
+    try {
+      await deleteCompany(company.id).unwrap();
+      onClose();
+    }
+    catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <AppModal
@@ -37,7 +38,7 @@ export const DeleteCompanyModal = ({
     >
 
       <Typography>
-        {t("delete_modal.delete_confirmation")} {company?.name}?
+        {t("delete_modal.delete_confirmation")} {company.name}
       </Typography>
 
 
@@ -47,8 +48,12 @@ export const DeleteCompanyModal = ({
           color="error"
           variant="contained"
           onClick={handleDelete}
+          disabled={isLoading}
         >
-          {t("delete_modal.delete")}
+          {isLoading
+            ? t("common.deleting")
+            : t("delete_modal.delete")
+          }
         </Button>
 
 

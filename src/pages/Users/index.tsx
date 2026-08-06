@@ -1,39 +1,42 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { fetchUsers } from "../../store/userSlice";
+import { useAppSelector } from "../../hooks/hooks";
 import { UserCard } from "../../components/Users/UserCard";
 import { useState } from "react";
 import { Grid } from "@mui/system";
-import { PagePagination } from "../../components/Pagination";
-import { Box, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { Pagination } from "@mui/material";
+import { useGetUsersQuery } from "../../store/userApi";
+import { Loader } from "../../components/ui/Loader";
 
 export const Users = () => {
-  const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
   const limit = 10;
 
-  const { users, total, loading, error } = useAppSelector((state) => state.users);
+  const currentUserId = useAppSelector((state) => state.auth.userId);
 
-  useEffect(() => {
-    dispatch(fetchUsers({
-      skip: (page - 1) * limit,
-      limit
-    }));
-  }, [dispatch, page, limit]);
+  const {
+    data,
+    isLoading,
+    error
+  } = useGetUsersQuery({
+    skip: (page - 1) * limit,
+    limit
+  });
 
-  const totalPages = Math.ceil(total / limit);
+  const users = data?.users ?? [];
 
-  const currentUserId = useAppSelector(
-      (state) => state.auth.userId
+  const totalPages = Math.ceil(
+    (data?.total ?? 0) / limit
   );
 
-  if (loading) {
-    return <p>Loading...</p>;
+  if (isLoading) {
+    return <Loader />;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <Typography>Error loading users</Typography>;
   }
+
+  console.log(users);
 
   return (
     <>
@@ -57,12 +60,12 @@ export const Users = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
-          mt: 3,
+          pt: 3,
         }}
       >
-        <PagePagination
+        <Pagination
           page={page}
-          totalPages={totalPages}
+          count={totalPages}
           onChange={() => setPage(page)}
         />
       </Box>

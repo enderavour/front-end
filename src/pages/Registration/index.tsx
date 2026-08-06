@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import {
   Button,
   Container,
@@ -9,9 +9,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { SocialAuth } from "../../components/auth/SocialAuth";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/apiService";
-import { Header } from "../../components/layout/Header";
+import { Header } from "../../layouts/Header";
 import { Alert } from "@mui/material";
 import axios from "axios";
+import { validateAuthForm } from "../../utils/validateAuth";
+import { AddRoutes } from "../../routes/routes";
 
 export const Registration = () => {
   const navigate = useNavigate();
@@ -22,33 +24,39 @@ export const Registration = () => {
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
-
   const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleRegister = async () => {
     setError("");
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const { emailValid, passwordValid } = validateAuthForm(email, password);
 
-    if (!emailRegex.test(email)) {
+    if (!emailValid) {
       setEmailError(true);
+      return;
+    }
+
+    if (!passwordValid)
+    {
+      setPasswordError(true);
       return;
     }
 
     try
     {
-      await axiosInstance.post("/users/", {
+      await axiosInstance.post(AddRoutes.USERS, {
         email,
         username: name,
         password
       });
 
-      navigate("/login");
+      navigate(AddRoutes.LOGIN);
     }
     catch (e)
     {
       if (axios.isAxiosError(e))
-        setError(e.response?.data?.detail ?? "Registration failed");
+        setError(e.response?.data?.detail ?? t("errors.regFailed"));
       else
         setError("Unknown error");
     }
@@ -86,7 +94,7 @@ export const Registration = () => {
             setEmailError(false);
           }}
           error={emailError}
-          helperText={emailError ? "Enter a valid email" : ""}
+          helperText={emailError ? t("errors.invalidEmail") : ""}
         />
 
         <TextField
@@ -94,6 +102,7 @@ export const Registration = () => {
           label={t("registration.password")}
           type="password"
           margin="normal"
+          error={passwordError}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />

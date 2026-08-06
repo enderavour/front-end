@@ -1,5 +1,5 @@
 import { Container, Typography } from '@mui/material';
-import { REACT_APP_APP_NAME } from '../../utils/constants';
+import { REACT_APP_APP_NAME } from '../../constants/constants';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
 import { healthCheck } from '../../api/health';

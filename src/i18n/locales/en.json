@@ -38,7 +38,10 @@
     "close": "Close"
   },
   "errors": {
-    "invalidEmail": "Enter a valid email"
+    "invalidEmail": "Enter a valid email",
+    "regFailed": "Registration failed",
+    "loginFailed": "Login Failed",
+    "invalidPassword": "Password not strong enough"
   },
   "auth": {
     "login": "Login",
@@ -107,5 +110,15 @@
     "companies": "Companies",
     "leave_company": "Leave Company",
     "cannot": "Cannot leave company"
+  },
+  "company_visibility": {
+    "public": "Public",
+    "private": "Private"
+  },
+  "common": {
+    "creating": "Creating...",
+    "deleting": "Deleting...",
+    "saving": "Saving...",
+    "leaving": "Leaving..."
   }
 }

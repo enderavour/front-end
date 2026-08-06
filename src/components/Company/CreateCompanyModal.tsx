@@ -9,8 +9,8 @@ import {
 import { useState } from "react";
 import { AppModal } from "../ui/AppModal";
 import { useAppDispatch } from "../../hooks/hooks";
-import { createCompany } from "../../store/companySlice";
 import { useTranslation } from "react-i18next";
+import { useCreateCompanyMutation } from "../../store/companyApi";
 
 interface Props
 {
@@ -32,24 +32,23 @@ export const CreateCompanyModal = ({
 
   const [isVisible, setIsVisible] = useState(true);
 
+  const [createCompany, { isLoading, error }] = useCreateCompanyMutation();
+
 
   const handleCreate = async () => {
-
-    const result = await dispatch(createCompany({
-      name,
-      description,
-      is_visible: isVisible
-    }));
-
-    if (createCompany.fulfilled.match(result))
+    try
     {
+      await createCompany({
+        name, description, is_visible: isVisible
+      }).unwrap();
+
       setName("");
       setDescription("");
       setIsVisible(true);
       onClose();
+    } catch (e) {
+      console.error(e);
     }
-
-    onClose();
   };
 
 
@@ -96,8 +95,12 @@ export const CreateCompanyModal = ({
         <Button
           variant="contained"
           onClick={handleCreate}
+          disabled={isLoading || !name.trim()}
         >
-          {t("create_modal.create")}
+          {isLoading
+            ? t("common.creating")
+            : t("create_modal.create")
+          }
         </Button>
       </Stack>
 

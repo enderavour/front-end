@@ -1,50 +1,50 @@
 import { Container, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch } from "../../hooks/hooks";
-import { useAppSelector } from "../../hooks/hooks";
-import { fetchCompanyById } from "../../store/companySlice";
-import { useEffect } from "react";
+import { useGetCompanyByIdQuery } from "../../store/companyApi";
+import { Loader } from "../../components/ui/Loader";
 
 export const CompanyProfile = () => {
   const { id } = useParams();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+
+  const companyId = Number(id);
 
   const {
-    selectedCompany,
-    loading,
-    error
-  } = useAppSelector(state => state.companies);
+    data: company,
+    isLoading,
+    error,
+  } = useGetCompanyByIdQuery(companyId);
 
-  useEffect(() => {
-    if (id)
-      dispatch(fetchCompanyById(Number(id)));
-  }, [dispatch, id]);
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  if (!selectedCompany) {
+  if (error || !company) {
     return (
-      <Container sx={{ mt: 4 }}>
+      <Container sx={{ pt: 4 }}>
         <Typography variant="h4">
-          {t("notfound.user")}
+          {t("notfound.company")}
         </Typography>
       </Container>
     );
   }
 
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container sx={{ pt: 4 }}>
       <Typography variant="h3">
-        {t("profile.name")}: {selectedCompany?.name}
+        {t("profile.name")}: {company.name}
       </Typography>
 
       <Typography>
-        {t("profile.description")}: {selectedCompany?.description}
+        {t("profile.description")}: {company.description}
       </Typography>
 
       <Typography>
-        {t("profile.visible")}: {selectedCompany?.is_visible ?
-          t("company_is_visible.yes") : t("company_is_visible.no")}
+        {t("profile.visible")}:{" "}
+        {company.is_visible
+          ? t("company_is_visible.yes")
+          : t("company_is_visible.no")}
       </Typography>
     </Container>
   );

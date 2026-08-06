@@ -12,29 +12,32 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { User } from "../../types/User";
-import { useAppDispatch } from "../../hooks/hooks";
-import { deleteUser } from "../../store/userSlice";
 import { AppModal } from "../ui/AppModal";
+import { useDeleteUserMutation } from "../../store/userApi";
 
 interface UserCardProps {
   user: User;
   currentUserId: number | null;
 }
 
-const UserCard = ({
+export const UserCard = ({
   user,
   currentUserId,
 }: UserCardProps) => {
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
+  const [deleteUser, { isLoading }] = useDeleteUserMutation();
 
   const [openDelete, setOpenDelete] = useState(false);
 
-  const handleDelete = () => {
-    dispatch(deleteUser(user.id));
-    setOpenDelete(false);
+  const handleDelete = async () => {
+    try {
+      await deleteUser(user.id).unwrap();
+      setOpenDelete(false);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -67,7 +70,7 @@ const UserCard = ({
                 fontSize: 28,
               }}
             >
-              {user.username[0].toUpperCase()}
+              {user.name[0].toUpperCase()}
             </Avatar>
 
             <Box sx={{ flex: 1 }}>
@@ -76,7 +79,7 @@ const UserCard = ({
                 variant="h6"
                 sx={{ fontWeight: 600 }}
               >
-                {user.username}
+                {user.name}
               </Typography>
 
               <Typography color="text.secondary">
@@ -117,8 +120,11 @@ const UserCard = ({
                 color="error"
                 variant="contained"
                 onClick={() => setOpenDelete(true)}
+                disabled={isLoading}
               >
-                {t("userProfile.delete")}
+                {isLoading
+                  ? t("common.deleting")
+                  : t("userProfile.delete")}
               </Button>
             )}
 
@@ -130,7 +136,7 @@ const UserCard = ({
       <AppModal
         open={openDelete}
         title=""
-        onClose={() => setOpenDelete(false)}
+        onClose={isLoading ? () => {} : () => setOpenDelete(false)}
       >
         <Typography variant="h6">
           {t("delete.del_prof")}
@@ -145,20 +151,21 @@ const UserCard = ({
             color="error"
             variant="contained"
             onClick={handleDelete}
+            disabled={isLoading}
           >
-            {t("delete.del")}
+            {isLoading
+              ? t("common.deleting")
+              : t("delete.del")}
           </Button>
 
           <Button
             onClick={() => setOpenDelete(false)}
+            disabled={isLoading}
           >
             {t("delete.can")}
           </Button>
         </Stack>
-
       </AppModal>
     </>
   );
 };
-
-export { UserCard };

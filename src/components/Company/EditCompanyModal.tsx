@@ -1,15 +1,15 @@
 import { Company } from "../../types/Company";
 import { useAppDispatch } from "../../hooks/hooks";
 import { useState, useEffect } from "react";
-import { updateCompany } from "../../store/companySlice";
 import { Stack, TextField, FormControlLabel, Switch, Button } from "@mui/material";
 import { AppModal } from "../ui/AppModal";
 import { useTranslation } from "react-i18next";
+import { useUpdateCompanyMutation } from "../../store/companyApi";
 
 interface EditModalProps
 {
   open: boolean;
-  company: Company | null;
+  company: Company;
   onClose: () => void;
 };
 
@@ -18,12 +18,13 @@ export const EditCompanyModal = ({
   company,
   onClose
 }: EditModalProps) => {
-  const dispatch = useAppDispatch();
   const { t } = useTranslation();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [visible, setVisible] = useState(true);
+
+  const [updateCompany, { isLoading }] = useUpdateCompanyMutation();
 
   useEffect(() => {
     if (company) {
@@ -34,14 +35,22 @@ export const EditCompanyModal = ({
   }, [company]);
 
   const handleSave = async () => {
-    if (!company) return;
-
-    await dispatch(updateCompany({
-      id: company.id,
-      data: { name, description, is_visible: true }
-    }));
-
-    onClose();
+    try
+    {
+      await updateCompany({
+        id: company.id,
+        data: {
+          name,
+          description,
+          is_visible: true
+        }
+      }).unwrap();
+      onClose();
+    }
+    catch (e)
+    {
+      console.error(e);
+    }
   };
 
   return (
@@ -82,8 +91,11 @@ export const EditCompanyModal = ({
         <Button
           variant="contained"
           onClick={handleSave}
+          disabled={isLoading}
         >
-          {t("company_card.save")}
+          {isLoading
+            ? t("common.saving")
+            : t("company_card.save")}
         </Button>
 
       </Stack>

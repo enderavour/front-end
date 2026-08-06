@@ -7,8 +7,10 @@ import { SocialAuth } from "../../components/auth/SocialAuth";
 import { saveToStorage } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
 import axiosInstance from "../../api/apiService";
-import { Header } from "../../components/layout/Header";
+import { Header } from "../../layouts/Header";
 import axios from "axios";
+import { AddRoutes } from "../../routes/routes";
+import { validateAuthForm } from "../../utils/validateAuth";
 
 export const Login = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +22,7 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
   const [error, setError] = useState("");
 
@@ -28,16 +31,21 @@ export const Login = () => {
   const handleLogin = async () => {
     setError("");
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const { emailValid, passwordValid } = validateAuthForm(email, password);
 
-    if (!emailRegex.test(email)) {
+    if (!emailValid) {
       setEmailError(true);
+      return;
+    }
+
+    if (!passwordValid) {
+      setPasswordError(true);
       return;
     }
 
     try
     {
-      const response = await axiosInstance.post("/auth/signin", {
+      const response = await axiosInstance.post(AddRoutes.AUTH_SIGNIN, {
         email, password
       });
 
@@ -48,7 +56,6 @@ export const Login = () => {
 
       const authData = {
         token: access_token,
-        expiresAt: Date.now() + 60 * 60 * 1000,
         userId: user_id
       };
 
@@ -56,7 +63,6 @@ export const Login = () => {
 
       saveToStorage(
         authData.token,
-        authData.expiresAt,
         authData.userId
       );
 
@@ -98,7 +104,7 @@ export const Login = () => {
           error={emailError}
           helperText={
             emailError
-              ? "Enter a valid email"
+              ? t("errors.invalidEmail")
               : ""
           }
         />
@@ -109,8 +115,15 @@ export const Login = () => {
           type="password"
           margin="normal"
           value={password}
+          error={passwordError}
+          helperText={
+            passwordError
+              ? t("errors.invalidPassword")
+              : ""
+          }
           onChange={(e) => {
             setPassword(e.target.value);
+            setPasswordError(false);
             setError("");
           }}
         />
@@ -126,7 +139,7 @@ export const Login = () => {
 
         <Typography sx={{ mt: 2 }}>
           {t("auth.no_account")}{" "}
-          <Link to="/register">
+          <Link to={AddRoutes.REGISTER}>
             {t("auth.register")}
           </Link>
         </Typography>

@@ -1,21 +1,11 @@
 import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material"
 import { LanguageSelect } from "../../components/ui/LanguageSelect";
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/hooks";
-import { logout } from "../../store/authSlice";
-import { clearStorage } from "../../utils/authStorage";
 import { useTranslation } from "react-i18next";
+import { useLogout } from "../../hooks/logout";
 
 export const Header = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { t } = useTranslation();
-
-  const handleLogout = () => {
-    dispatch(logout());
-    clearStorage();
-    navigate("/login");
-  };
+  const handleLogout = useLogout();
 
   return (
     <AppBar position="static">

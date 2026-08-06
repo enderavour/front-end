@@ -14,6 +14,8 @@ export const UserCompanyList = ({
   companies
 }: UserCompanyListProps) => {
   const [leaveCompany, { isLoading }] = useLeaveCompanyMutation();
+  const [leavingCompanyId, setLeavingCompanyId] = useState<number | null>(null);
+
   const { t } = useTranslation();
 
   const [errorCompanyId, setErrorCompanyId] = useState<number | null>(null);
@@ -21,14 +23,17 @@ export const UserCompanyList = ({
 
   const handleLeave = async (companyId: number) => {
     try {
+        setLeavingCompanyId(companyId);
+
         await leaveCompany(companyId).unwrap();
 
         setErrorCompanyId(null);
         setErrorMessage("");
     } catch (err: any) {
         setErrorCompanyId(companyId);
-
         setErrorMessage(err?.data?.detail ?? t("user_company_list.cannot"));
+    } finally {
+      setLeavingCompanyId(null);
     }
   };
 
@@ -69,9 +74,12 @@ export const UserCompanyList = ({
             <CardActions>
               <Button
                 color="error"
+                disabled={company.id === leavingCompanyId}
                 onClick={() => handleLeave(company.id)}
               >
-                {t("user_company_list.leave_company")}
+                {isLoading
+                  ? t("common.leaving")
+                  : t("user_company_list.leave_company")}
               </Button>
             </CardActions>
           </Card>

@@ -13,6 +13,7 @@ import {
 import { Link } from "react-router-dom";
 import { Company } from "../../types/Company";
 import { useTranslation } from "react-i18next";
+import { RoutePaths } from "../../routes/routes";
 
 interface CompanyCardProps
 {
@@ -68,8 +69,8 @@ export const CompanyCard = ({
             <Chip
               label={
                 company.is_visible
-                  ? "Public"
-                  : "Private"
+                  ? t("company_visibility.public")
+                  : t("company_visibility.private")
               }
               size="small"
             />
@@ -78,12 +79,13 @@ export const CompanyCard = ({
 
         </Stack>
 
-        <Typography
-          sx={{ mt: 2 }}
-          color="text.secondary"
-        >
-          {company.description || t("company_card.nodesc")}
-        </Typography>
+        <Box sx={{ pt: 2 }}>
+          <Typography
+            color="text.secondary"
+          >
+            {company.description || t("company_card.nodesc")}
+          </Typography>
+        </Box>
 
       </CardContent>
 
@@ -91,7 +93,7 @@ export const CompanyCard = ({
 
         <Button
           component={Link}
-          to={`/companies/${company.id}`}
+          to={RoutePaths.company(company.id)}
           variant="outlined"
         >
           {t("company_card.view")}
@@ -100,14 +102,14 @@ export const CompanyCard = ({
         {currentUserId === company.owner_id && (
           <>
             <Button
-              onClick={() => onEdit?.(company)}
+              onClick={() => onEdit(company)}
             >
               {t("company_card.edit")}
             </Button>
 
             <Button
               color="error"
-              onClick={() => onDelete?.(company)}
+              onClick={() => onDelete(company)}
             >
               {t("company_card.delete")}
             </Button>

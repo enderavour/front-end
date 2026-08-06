@@ -1,6 +1,5 @@
-export const saveToStorage = (token: string, expiresAt: number, userId: number) => {
+export const saveToStorage = (token: string, userId: number) => {
   localStorage.setItem("token", token);
-  localStorage.setItem("expiresAt", String(expiresAt));
   localStorage.setItem("userId", String(userId));
 };
 
@@ -23,6 +22,5 @@ export const getFromStorage = () => {
 
 export const clearStorage = () => {
   localStorage.removeItem("token");
-  localStorage.removeItem("expiresAt");
   localStorage.removeItem("userId");
 }
