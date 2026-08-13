@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Company } from "../types/Company";
+import { CompanyInvitation } from "../types/CompanyInvitation";
+import { CompanyJoinRequest } from "../types/CompanyJoinRequest";
+import { CompanyMember } from "../types/CompanyMember";
 
 interface CompanyResponse
 {
@@ -35,10 +38,10 @@ export const companyApi = createApi({
   endpoints: (builder) => ({
     inviteUser: builder.mutation<void, { companyId: number; userId: number }>({
       query: ({ companyId, userId }) => ({
-        url: `/company/${companyId}/invite/${userId}`,
+        url: `/companies/${companyId}/invite/${userId}`,
         method: "POST"
       }),
-      invalidatesTags: ["Company"]
+      invalidatesTags: ["Invitation"]
     }),
     cancelInvitation: builder.mutation({
       query: invitationId => ({
@@ -47,7 +50,7 @@ export const companyApi = createApi({
       }),
       invalidatesTags: ["Invitation"]
     }),
-    getCompaniesInvitation: builder.query({
+    getCompaniesInvitation: builder.query<CompanyInvitation[], number>({
       query: companyId => `/companies/${companyId}/invitations`,
       providesTags: ["Invitation"]
     }),
@@ -61,11 +64,12 @@ export const companyApi = createApi({
     rejectRequest: builder.mutation({
       query: requestId => ({
         url: `/requests/${requestId}/reject`,
+
         method: "POST"
       }),
       invalidatesTags: ["Request"]
     }),
-    getMembers: builder.query({
+    getMembers: builder.query<CompanyMember[], number>({
         query: companyId => `/companies/${companyId}/members`,
         providesTags: ["Member"]
     }),
@@ -75,6 +79,10 @@ export const companyApi = createApi({
           method: "DELETE"
         }),
         invalidatesTags: ["Member"]
+    }),
+    getCompanyRequests: builder.query<CompanyJoinRequest[], number>({
+      query: (companyId) => `/companies/${companyId}/requests`,
+      providesTags: ["Request"]
     }),
     getCompanies: builder.query<CompanyResponse, { skip: number, limit: number }>({
       query: ({ skip, limit }) => `/companies?skip=${skip}&limit=${limit}`,
@@ -122,6 +130,63 @@ export const companyApi = createApi({
         method: "DELETE",
       }),
       invalidatesTags: ["Company"]
+    }),
+    acceptInvitation: builder.mutation<void, number>({
+      query: (invitationId) => ({
+        url: `/invitations/${invitationId}/accept`,
+        method: "POST"
+      }),
+      invalidatesTags: ["Invitation", "Member"]
+    }),
+    declineInvitation: builder.mutation<void, number>({
+      query: (invitationId) => ({
+        url: `/invitations/${invitationId}/decline`,
+        method: "POST"
+      }),
+      invalidatesTags: ["Invitation"]
+    }),
+    getMyInvitations: builder.query<CompanyInvitation[], void>({
+      query: () => "/invitations/my",
+      providesTags: ["Invitation"]
+    }),
+    createJoinRequest: builder.mutation<void, number>({
+      query: (companyId) => ({
+        url: `/requests/${companyId}`,
+        method: "POST"
+      }),
+      invalidatesTags: ["Request"]
+    }),
+    getMyRequests: builder.query<CompanyJoinRequest[], void>({
+      query: () => "/requests/my",
+      providesTags: ["Request"]
+    }),
+    cancelJoinRequest: builder.mutation<void, number>({
+      query: (requestId) => ({
+        url: `/requests/${requestId}`,
+        method: "DELETE"
+      }),
+      invalidatesTags: ["Request"]
+    }),
+    cancelRequest: builder.mutation<void, number>({
+      query: (requestId) => ({
+        url: `/requests/${requestId}`,
+        method: "DELETE"
+      }),
+      invalidatesTags: ["Request"]
+    }),
+    appointAdmin: builder.mutation<void, { companyId: number; userId: number }>({
+      query: ({ companyId, userId }) => ({
+        url: `/companies/${companyId}/members/${userId}/admin`,
+        method: "POST"
+      }),
+      invalidatesTags: ["Member"]
+    }),
+    removeAdmin: builder.mutation<void, { companyId: number, userId: number }>({
+      query: ({ companyId, userId }) => ({
+        url: `/companies/${companyId}/members/${userId}/admin`,
+        method: "DELETE"
+      }),
+      invalidatesTags: ["Member"]
     })
   }),
 });
@@ -129,10 +194,26 @@ export const companyApi = createApi({
 export const {
   useGetCompaniesQuery,
   useGetUserCompaniesQuery,
+  useCreateJoinRequestMutation,
+  useGetMyRequestsQuery,
+  useGetMembersQuery,
+  useGetMyInvitationsQuery,
+  useCancelJoinRequestMutation,
+  useGetCompaniesInvitationQuery,
   useInviteUserMutation,
+  useAcceptRequestMutation,
+  useAcceptInvitationMutation,
+  useCancelRequestMutation,
+  useDeclineInvitationMutation,
+  useGetCompanyRequestsQuery,
+  useExcludeMemberMutation,
+  useRejectRequestMutation,
+  useCancelInvitationMutation,
   useLeaveCompanyMutation,
   useGetCompanyByIdQuery,
   useCreateCompanyMutation,
   useUpdateCompanyMutation,
   useDeleteCompanyMutation,
+  useAppointAdminMutation,
+  useRemoveAdminMutation
 } = companyApi;

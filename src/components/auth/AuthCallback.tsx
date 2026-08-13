@@ -38,7 +38,7 @@ export const AuthCallback = () => {
           authData.userId
         );
 
-        navigate(AddRoutes.LOGIN);
+        navigate(AddRoutes.ROOT);
       } catch (error) {
         console.error(error);
         navigate(AddRoutes.LOGIN);

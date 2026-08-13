@@ -43,22 +43,33 @@ export const Registration = () => {
       return;
     }
 
-    try
-    {
+    try {
       await axiosInstance.post(AddRoutes.USERS, {
         email,
-        username: name,
+        name,
         password
       });
 
       navigate(AddRoutes.LOGIN);
     }
-    catch (e)
-    {
-      if (axios.isAxiosError(e))
-        setError(e.response?.data?.detail ?? t("errors.regFailed"));
-      else
+    catch (e) {
+      if (axios.isAxiosError(e)) {
+        const detail = e.response?.data?.detail;
+
+        if (typeof detail === "string") {
+          setError(detail);
+        } else if (Array.isArray(detail)) {
+          setError(
+            detail
+              .map((item) => item.msg)
+              .join(", ")
+          );
+        } else {
+          setError(t("errors.regFailed"));
+        }
+      } else {
         setError("Unknown error");
+      }
     }
   };
 

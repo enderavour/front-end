@@ -1,5 +1,4 @@
 import { Company } from "../../types/Company";
-import { useAppDispatch } from "../../hooks/hooks";
 import { useState, useEffect } from "react";
 import { Stack, TextField, FormControlLabel, Switch, Button } from "@mui/material";
 import { AppModal } from "../ui/AppModal";

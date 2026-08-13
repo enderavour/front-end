@@ -7,15 +7,6 @@ interface UserResponse
   total: number;
 }
 
-interface UsersState
-{
-  users: User[];
-  total: number;
-  selectedUser: User | null;
-  loading: boolean;
-  error: string | null;
-};
-
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({

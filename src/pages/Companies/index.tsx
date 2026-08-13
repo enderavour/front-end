@@ -24,8 +24,7 @@ export const Companies = () => {
 
   const {
     data,
-    isLoading,
-    error
+    isLoading
   } = useGetCompaniesQuery({
     skip: (page - 1) * limit,
     limit
@@ -35,7 +34,6 @@ export const Companies = () => {
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [openCreate, setOpenCreate] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
 
   const handleEdit = (company: Company) => {
     setSelectedCompany(company);

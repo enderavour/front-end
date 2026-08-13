@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { Company } from "../../types/Company";
 import { useTranslation } from "react-i18next";
 import { RoutePaths } from "../../routes/routes";
+import { useCreateJoinRequestMutation } from "../../store/companyApi";
 
 interface CompanyCardProps
 {
@@ -31,6 +32,16 @@ export const CompanyCard = ({
   onDelete
 }: CompanyCardProps) => {
   const { t } = useTranslation();
+
+  const [createRequest, { isLoading }] = useCreateJoinRequestMutation();
+
+  const handleJoin = async (companyId: number) => {
+    try {
+      await createRequest(companyId).unwrap();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <Card

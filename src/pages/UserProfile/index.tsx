@@ -19,6 +19,8 @@ import { useGetUserCompaniesQuery } from "../../store/companyApi";
 import { useUpdateUserMutation, useGetUserByIdQuery, useDeleteUserMutation } from "../../store/userApi";
 import { AppModal } from "../../components/ui/AppModal";
 import { AddRoutes } from "../../routes/routes";
+import { MyInvitationsList } from "../../components/Company/MyInvitationsList";
+import { MyRequestsList } from "../../components/Company/MyRequestList";
 
 export const UserProfile = () => {
   const { id } = useParams();
@@ -208,6 +210,17 @@ export const UserProfile = () => {
                 }
               />
 
+              <Typography variant="h5" sx={{ pt: 4, mb: 2 }}>
+                My invitations
+              </Typography>
+
+              <MyInvitationsList />
+
+              <Typography variant="h5" sx={{ mt: 4, mb: 2 }}>
+                My Requests
+              </Typography>
+
+              <MyRequestsList />
 
               {
                 avatar && (

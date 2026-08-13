@@ -1,6 +1,6 @@
-# FE #9: Add Company CRUD
+# FE #11: Add Admin Role
 
-Created Company feature, added Edit and Delete options, added option to leave company, added company listings and details, implemented list of companies in user profile.
+Added Admin role for member, functionality to appoint and remove admin, displaying of appointed company admins. 
 
 In order to run an application as a container: 
 ```bash

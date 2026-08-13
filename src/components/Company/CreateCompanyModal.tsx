@@ -8,7 +8,6 @@ import {
 
 import { useState } from "react";
 import { AppModal } from "../ui/AppModal";
-import { useAppDispatch } from "../../hooks/hooks";
 import { useTranslation } from "react-i18next";
 import { useCreateCompanyMutation } from "../../store/companyApi";
 
@@ -23,8 +22,6 @@ export const CreateCompanyModal = ({
   onClose
 }: Props) => {
 
-  const dispatch = useAppDispatch();
-
   const { t } = useTranslation();
 
   const [name, setName] = useState("");
@@ -32,8 +29,7 @@ export const CreateCompanyModal = ({
 
   const [isVisible, setIsVisible] = useState(true);
 
-  const [createCompany, { isLoading, error }] = useCreateCompanyMutation();
-
+  const [createCompany, { isLoading }] = useCreateCompanyMutation();
 
   const handleCreate = async () => {
     try
